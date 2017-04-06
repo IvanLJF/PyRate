@@ -45,6 +45,8 @@ def pendiffexp(alphamod, cvdav):
     :param float alphamod: Exponential decay exponent.
     :param array cvdav: Function magnitude at 0 radius (2 col array of radius,
     variance)
+
+    :return xxxx
     """
     # pylint: disable=invalid-name
 
@@ -57,27 +59,22 @@ def pendiffexp(alphamod, cvdav):
 def _unique_points(points):
     """
     Returns unique points from a list of coordinates.
-
-    :param points: Sequence of (y,x) or (x,y) tuples.
     """
     return vstack([array(u) for u in set(points)])
 
 
 def cvd(ifg_path, params, calc_alpha=False, write_vals=False, save_acg=False):
     """
-    Calculate the 1D covariance function of an entire interferogram as the
-    radial average of its 2D autocorrelation.
+    Calculate average covariance versus distance (autocorrelation) and its
+    best fitting exponential function.
 
-    :param ifg_path: An interferogram.
-        ifg: :py:class:`pyrate.shared.Ifg`.
-    :param params: dict
-        dictionary of configuration parameters
-    :param calc_alpha: bool
-        calculate alpha, the exponential length-scale of decay factor.
-    :param write_vals: bool
-        write maxvar and alpha values to interferogram metadata.
-    :param save_acg: bool
-        write acg and radial distance data to numpy array
+    :param ifg_path: An interferogram. ifg: :py:class:`pyrate.shared.Ifg`
+    :param: params: Dictionary of configuration parameters
+    :param calc_alpha: Calculate alpha, the exponential length-scale of decay factor
+    :param write_vals: Write maxvar and alpha values to interferogram metadata
+    :param save_acg: Write acg and radial distance data to numpy array
+
+    :return xxxx
     """
     # pylint: disable=invalid-name
     # pylint: disable=too-many-locals
@@ -196,7 +193,9 @@ def cvd(ifg_path, params, calc_alpha=False, write_vals=False, save_acg=False):
 
 
 def _add_metadata(ifg, maxvar, alpha):
-    """convenience function for saving metadata to ifg"""
+    """
+    Convenience function for saving metadata to interferogram.
+    """
     md = ifg.meta_data
     md[ifc.PYRATE_MAXVAR] = str(maxvar) #.astype('str')
     md[ifc.PYRATE_ALPHA] = str(alpha) #.astype('str')
@@ -204,7 +203,9 @@ def _add_metadata(ifg, maxvar, alpha):
 
 
 def _save_cvd_data(acg, r_dist, ifg_path, outdir):
-    """ function to save numpy array of autocorrelation data to disk"""
+    """
+    Function to save numpy array of autocorrelation data to disk.
+    """
     data = np.column_stack((acg, r_dist))
     data_file = join(outdir, 'cvd_data_{b}.npy'.format(
         b=basename(ifg_path).split('.')[0]))
@@ -222,10 +223,10 @@ def get_vcmt(ifgs, maxvar):
         C = -0.5 if the master of i or j equals the slave of the other
         C = 0 otherwise
 
-    :param ifgs: A stack of interferograms.
-        ifg: :py:class:`pyrate.shared.Ifg`.
-    :param maxvar: ndarray
-        numpy array of maximum variance values for each interferogram.
+    :param ifgs: A stack of interferograms.:py:class:`pyrate.shared.Ifg`
+    :param maxvar: numpy array of maximum variance values for each interferogram
+
+    :return xxxx
     """
     # pylint: disable=too-many-locals
     # c=0.5 for common master or slave; c=-0.5 if master
