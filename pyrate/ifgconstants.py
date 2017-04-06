@@ -15,7 +15,7 @@
 #   limitations under the License.
 """
 This Python module contains a collection of constants used in
-various components of the PyRate software
+various components of the PyRate software.
 """
 
 # lookup keys for the metadata fields in PyRate GeoTIFF files
