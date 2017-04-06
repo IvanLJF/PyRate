@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 """
-This Python module defines executable run configuration for the PyRate software
+This Python module defines executable run configuration for the PyRate software.
 """
 import sys
 import os
@@ -30,7 +30,9 @@ log = logging.getLogger(__name__)
 
 
 def version_msg():
-    """Returns the Cookiecutter version, location and Python powering it."""
+    """
+    Returns the Cookiecutter version, location and Python powering it.
+    """
     python_version = sys.version[:3]
     location = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     message = u'PyRate %(version)s from {} (Python {})'
@@ -51,8 +53,8 @@ def cli(verbosity):
 @click.argument('config_file')
 def prepifg(config_file):
     """
-    Convert input files to geotiff and perform multilooking
-    (resampling) and/or cropping
+    Convert input files to geotiff and perform multi-looking
+    (resampling) and/or cropping.
     """
     config_file = abspath(config_file)
     params = cf.get_config_params(config_file)
@@ -70,7 +72,7 @@ def prepifg(config_file):
               help='divide ifgs into this many columns')
 def linrate(config_file, rows, cols):
     """
-    Main PyRate workflow including time series and linear rate computation
+    Main PyRate workflow including time series and linear rate computation.
     """
     config_file = abspath(config_file)
     run_pyrate.main(config_file, rows, cols)
@@ -85,6 +87,8 @@ def linrate(config_file, rows, cols):
               help='divide ifgs into this many columns. Must be same as '
                    'number of cols used previously in main workflow')
 def postprocess(config_file, rows, cols):
-    """Reassemble output tiles and save as geotiffs"""
+    """
+    Reassemble output tiles and save as geotiffs.
+    """
     config_file = abspath(config_file)
     postprocessing.main(config_file, rows, cols)
