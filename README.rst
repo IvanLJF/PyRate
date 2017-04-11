@@ -32,6 +32,9 @@ Virtual Environment
 
 You can use one of the two virtual environment options below:
 
+Note: if you are using a HPC environment, refer to `these instructions instead <https://github.com/GeoscienceAustralia/PyRate/tree/master/hpc>`_.
+
+
 **Virtualenv**
 
 1. Install `virtualenv <https://gist.github.com/basaks/b33ea9106c7d1d72ac3a79fdcea430eb>`_.
