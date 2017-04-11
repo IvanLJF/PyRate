@@ -118,7 +118,6 @@ different parts of the workflow.
 3. ``linrate_timeseries``
 4. ``postprocess``
 
-More detailed documentation on the use of PyRate can be found in the `User Guide <http://geoscienceaustralia.github.io/PyRate>`_.
 
 ******************************************
 1. prepifg: Preparing input interferograms
@@ -192,19 +191,19 @@ the full size interferograms. This enables large interferograms to be more easil
 
 .. code-block:: python
 
-    >> pyrate linrate --help
-    Usage: pyrate linrate [OPTIONS] CONFIG_FILE
+    >> pyrate linrate_timeseries --help
+    Usage: pyrate linrate_timeseries [OPTIONS] CONFIG_FILE
 
     Options:
       -r, --rows INTEGER  divide ifgs into this many rows
       -c, --cols INTEGER  divide ifgs into this many columns
       --help              Show this message and exit
 
-The ``linrate`` command will perform the time series and linear rate analysis:
+The ``linrate_timeseries`` command will perform the time series and linear rate analysis:
 
 .. code-block:: python
 
-    pyrate linrate path/to/config_file -c 3 -r 4
+    pyrate linrate_timeseries path/to/config_file -c 3 -r 4
 
 This command also has the option to break the interferograms into tiles of ``r`` rows and
 ``c`` columns (see ``correct`` command above).
@@ -227,7 +226,7 @@ geotiff files of the final time series and linear rate products.
       --help              Show this message and exit.
 
 Make sure to use the same number of rows and columns that was used in the
-previous ``linrate`` step:
+previous ``linrate_timeseries`` step:
 
 .. code-block:: python
 
@@ -256,7 +255,7 @@ MPI Support
 ===========
 
 PyRate has been designed for use on High Performance Computers and
-instructions to use a HPC cluster can be found in the `pbs directory <pbs>`_.
+instructions to use a HPC cluster can be found in the `hpc directory <hpc>`_.
 
 ==============================
 Python Multi-threading Support
