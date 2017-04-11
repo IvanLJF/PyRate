@@ -42,11 +42,12 @@ def pendiffexp(alphamod, cvdav):
     Exponential function for fitting the 1D covariance after Parsons et al.,
     Geophys. J. Int., 2006.
 
-    :param float alphamod: Exponential decay exponent.
-    :param array cvdav: Function magnitude at 0 radius (2 col array of radius,
+    :param xxx(eg str, tuple, int, float...) alphamod: Exponential decay exponent
+    :param xxx cvdav: Function magnitude at 0 radius (2 col array of radius,
     variance)
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=invalid-name
 
@@ -68,13 +69,14 @@ def cvd(ifg_path, params, calc_alpha=False, write_vals=False, save_acg=False):
     Calculate average covariance versus distance (autocorrelation) and its
     best fitting exponential function.
 
-    :param ifg_path: An interferogram. ifg: :py:class:`pyrate.shared.Ifg`
-    :param: params: Dictionary of configuration parameters
-    :param calc_alpha: Calculate alpha, the exponential length-scale of decay factor
-    :param write_vals: Write maxvar and alpha values to interferogram metadata
-    :param save_acg: Write acg and radial distance data to numpy array
+    :param xxx(eg str, tuple, int, float...) ifg_path: An interferogram. ifg: :py:class:`pyrate.shared.Ifg`
+    :param: dict params: Dictionary of configuration parameters
+    :param xxx calc_alpha: Calculate alpha, the exponential length-scale of decay factor
+    :param xxx write_vals: Write maxvar and alpha values to interferogram metadata
+    :param xxx save_acg: Write acg and radial distance data to numpy array
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=invalid-name
     # pylint: disable=too-many-locals
@@ -223,10 +225,11 @@ def get_vcmt(ifgs, maxvar):
         C = -0.5 if the master of i or j equals the slave of the other
         C = 0 otherwise
 
-    :param ifgs: A stack of interferograms.:py:class:`pyrate.shared.Ifg`
-    :param maxvar: numpy array of maximum variance values for each interferogram
+    :param xxx(eg str, tuple, int, float...) ifgs: A stack of interferograms.:py:class:`pyrate.shared.Ifg`
+    :param xxx maxvar: numpy array of maximum variance values for each interferogram
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=too-many-locals
     # c=0.5 for common master or slave; c=-0.5 if master

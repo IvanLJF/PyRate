@@ -52,8 +52,8 @@ class SinglePixelIfg(object):
 
 class LinearRateTests(unittest.TestCase):
     """
-    Tests the weighted least squares algorithm for determinining
-    the best fitting velocity
+    Tests the weighted least squares algorithm for determining
+    the best fitting velocity.
     """
 
     def setUp(self):
@@ -78,7 +78,7 @@ class LinearRateTests(unittest.TestCase):
 
 class MatlabEqualityTest(unittest.TestCase):
     """
-    Tests equality vs matlab
+    Tests equality vs Matlab.
     """
 
     @classmethod
@@ -148,63 +148,63 @@ class MatlabEqualityTest(unittest.TestCase):
 
     def test_linear_rate_full_parallel(self):
         """
-        python multiprocessing by rows vs serial
+        Python multiprocessing by rows vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.rate, self.rate_s, decimal=3)
 
     def test_linrate_error_parallel(self):
         """
-        python multiprocessing by rows vs serial
+        Python multiprocessing by rows vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.error, self.error_s, decimal=3)
 
     def test_linrate_samples_parallel(self):
         """
-        python multiprocessing by rows vs serial
+        Python multiprocessing by rows vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.samples, self.samples_s, decimal=3)
 
     def test_linrate_full_parallel_pixel(self):
         """
-        python multiprocessing by pixel vs serial
+        Python multiprocessing by pixel vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.rate_2, self.rate_s, decimal=3)
 
     def test_linrate_error_parallel_pixel(self):
         """
-        python multiprocessing by pixel vs serial
+        Python multiprocessing by pixel vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.error_2, self.error_s, decimal=3)
 
     def test_linrate_samples_parallel_pixel(self):
         """
-        python multiprocessing pixel level vs serial
+        Python multiprocessing pixel level vs serial.
         """
         np.testing.assert_array_almost_equal(
             self.samples_2, self.samples_s, decimal=3)
 
     def test_linear_rate(self):
         """
-        python vs matlab
+        Python vs Matlab.
         """
         np.testing.assert_array_almost_equal(
             self.rate_s, self.rate_matlab, decimal=3)
 
     def test_linrate_error(self):
         """
-        python vs matlab
+        Python vs Matlab.
         """
         np.testing.assert_array_almost_equal(
             self.error_s, self.error_matlab, decimal=3)
 
     def test_linrate_samples(self):
         """
-        python linrate samples vs matlab
+        Python linrate samples vs Matlab.
         """
         np.testing.assert_array_almost_equal(
             self.samples_s, self.samples_matlab, decimal=3)

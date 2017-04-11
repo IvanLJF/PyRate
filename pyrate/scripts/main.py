@@ -45,7 +45,9 @@ def version_msg():
               type=click.Choice(['DEBUG', 'INFO', 'WARNING', 'ERROR']),
               default='INFO', help='Level of logging')
 def cli(verbosity):
-    """Commandline options and logging setup"""
+    """
+    Commandline options and logging setup.
+    """
     pylog.configure(verbosity)
 
 

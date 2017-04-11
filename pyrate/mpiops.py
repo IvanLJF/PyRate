@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 """
-This Python module contains MPI convenience functions for PyRate
+This Python module contains MPI convenience functions for PyRate.
 """
 # pylint: disable=no-member
 # pylint: disable=invalid-name
@@ -43,22 +43,18 @@ the rank of the node.
 
 
 def run_once(f, *args, **kwargs):
-    """Run a function on one node, broadcast result to all
+    """
+    Run a function on one node, broadcast result to all
     This function evaluates a function on a single node in the MPI world,
     then broadcasts the result of that function to every node in the world.
-    Parameters
-    ----------
-    f : callable
-        The function to be evaluated. Can take arbitrary arguments and return
+    
+    :param xxx(eg str, tuple, int, float...) f: The function to be evaluated. Can take arbitrary arguments and return
         anything or nothing
-    args : optional
-        Other positional arguments to pass on to f
-    kwargs : optional
-        Other named arguments to pass on to f
-    Returns
-    -------
-    result
-        The value returned by f
+    :param xxx args: Other positional arguments to pass on to f (optional)
+    :param xxx kwargs: Other named arguments to pass on to f (optional)
+
+    :return: The value returned by f.
+    :rtype: xxxx(eg float)    
     """
     if rank == 0:
         f_result = f(*args, **kwargs)
@@ -70,16 +66,14 @@ def run_once(f, *args, **kwargs):
 
 def array_split(arr, process=None):
     """
-    Convenience function for splitting array elements across MPI processes
-    Parameters
-    ----------
-    arr: ndarray
-        1-D array
-    process: int, optional
-        process for which array members are required.
-        If None, MPI.comm.rank is used instead.
+    Convenience function for splitting array elements across MPI processes.
+    
+    :param array arr: 1-D array
+    :parm xxx process: Process for which array members are required.
+        If None, MPI.comm.rank is used instead. (optional)
 
-    Returns list corresponding to array members in a a process
+    :return List corresponding to array members in a process.
+    :rtype: xxxx(eg float)
     """
     r = process if process else rank
     return np.array_split(arr, size)[r]

@@ -76,7 +76,7 @@ def test_original_ifg_paths():
 
 def dest_ifg_paths(ifg_paths, outdir):
     """
-    Returns paths to out/dest ifgs.
+    Returns paths to out/destination interferograms.
     """
 
     bases = [os.path.basename(p) for p in ifg_paths]
@@ -150,7 +150,9 @@ class PyRateTests(unittest.TestCase):
         os.chdir(CURRENT_DIR)
 
     def key_check(self, ifg, key, value):
-        'Helper to check for metadata flags'
+        """
+        Helper to check for metadata flags.
+        """
         md = ifg.dataset.GetMetadata()
         self.assertTrue(key in md, 'Missing %s in %s' % (key, ifg.data_path))
         self.assertTrue(md[key], value)
@@ -183,7 +185,7 @@ class PyRateTests(unittest.TestCase):
 
 class ParallelPyRateTests(unittest.TestCase):
     """
-    parallel vs serial pyrate tests verifying results from all steps equal
+    Parallel vs serial PyRate tests verifying results from all steps equal.
     """
 
     @classmethod
@@ -256,7 +258,9 @@ class ParallelPyRateTests(unittest.TestCase):
             self.key_check(i, key, value)
 
     def key_check(self, ifg, key, value):
-        'Helper to check for metadata flags'
+        """
+        Helper to check for metadata flags.
+        """
         md = ifg.dataset.GetMetadata()
         self.assertTrue(key in md, 'Missing %s in %s' % (key, ifg.data_path))
         self.assertTrue(md[key], value)

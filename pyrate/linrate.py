@@ -35,16 +35,17 @@ def linear_rate(ifgs, params, vcmt, mst=None):
     Pixel-by-pixel linear rate (velocity) estimation using iterative
     weighted least-squares method.
 
-    :param ifgs: Sequence of interferogram objects from which to extract observations
-    :param params: Configuration parameters
-    :param vcmt: Derived positive definite temporal variance covariance matrix
-    :param mst: Pixel-wise matrix describing the minimum spanning tree network
-    :param parallel: Use multiprocessing or not
-    :param processes: Number of parallel processes to use
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects from which to extract observations
+    :param xxx params: Configuration parameters
+    :param xxx vcmt: Derived positive definite temporal variance covariance matrix
+    :param xxx mst: Pixel-wise matrix describing the minimum spanning tree network
+    :param xxx parallel: Use multiprocessing or not
+    :param xxx processes: Number of parallel processes to use
 
-    :return rate: Linear rate (velocity) map
-    :return error: Standard deviation of the rate map
-    :return samples: Statistics of coherent observations used in calculation
+    :return: rate: Linear rate (velocity) map
+    :return: error: Standard deviation of the rate map
+    :return: samples: Statistics of coherent observations used in calculation
+    :rtype: xxxx(eg float)    
     """
     maxsig, nsig, pthresh, cols, error, mst, obs, parallel, _, \
         rate, rows, samples, span = linrate_setup(ifgs, mst, params)
@@ -94,11 +95,12 @@ def linrate_setup(ifgs, mst, params):
     """
     Convenience function for linrate setup.
     
-    :param ifgs: xxxx 
-    :param mst: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx 
+    :param xxx mst: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # MULTIPROCESSING parameters
     parallel = params[cf.PARALLEL]
@@ -132,16 +134,17 @@ def linear_rate_by_rows(row, cols, mst, NSIG, obs, PTHRESH, span, vcmt):
     """
     Helper function for parallel 'row' runs.
     
-    :param row: xxxx
-    :param cols: xxxx
-    :param mst: xxxx
-    :param NSIG: xxxx
-    :param obs: xxxx
-    :param PTHRESH: xxxx
-    :param span: Span calculated in linarate function
-    :param vcmt: Temporal vcm matrix
+    :param xxx(eg str, tuple, int, float...) row: xxxx
+    :param xxx cols: xxxx
+    :param xxx mst: xxxx
+    :param xxx NSIG: xxxx
+    :param xxx obs: xxxx
+    :param xxx PTHRESH: xxxx
+    :param xxx span: Span calculated in linarate function
+    :param xxx vcmt: Temporal vcm matrix
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     res = np.empty(shape=(cols, 3), dtype=np.float32)
     for col in range(cols):
@@ -155,16 +158,17 @@ def linear_rate_by_pixel(row, col, mst, nsig, obs, pthresh, span, vcmt):
     """
     Compute linear rate for one pixel.
 
-    :param row: xxxx
-    :param col: xxxx
-    :param mst: xxxx
-    :param nsig: xxxx
-    :param obs: xxxx
-    :param pthresh: xxxx
-    :param span: xxxx
-    :param vcmt: xxxx
+    :param xxx row: xxxx
+    :param xxx col: xxxx
+    :param xxx mst: xxxx
+    :param xxx nsig: xxxx
+    :param xxx obs: xxxx
+    :param xxx pthresh: xxxx
+    :param xxx span: xxxx
+    :param xxx vcmt: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # find the indices of independent ifgs for given pixel from MST
     ind = np.nonzero(mst[:, row, col])[0]  # only True's in mst are chosen

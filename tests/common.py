@@ -100,8 +100,10 @@ IFMS16 = ['geo_060619-061002_unw.tif',
 
 
 def small_data_setup(datafiles=None, is_dir=False):
-    """Returns Ifg objs for the files in the small test dir
-    input phase data is in radians; these ifgs are in radians - not converted to mm"""
+    """
+    Returns interferogram objects for the files in the small test dir
+    input phase data is in radians; these interferograms are in radians - not converted to mm.
+    """
     if is_dir:
         datafiles = glob.glob(join(datafiles, "*.tif"))
     else:
@@ -121,8 +123,10 @@ def small_data_setup(datafiles=None, is_dir=False):
 
 
 def small_ifg_file_list(datafiles=None):
-    """Returns the file list of all the .tif files after prepifg conversion
-    input phase data is in radians; these ifgs are in radians - not converted to mm"""
+    """
+    Returns the file list of all the .tif files after prepifg conversion
+    input phase data is in radians; these interferograms are in radians - not converted to mm.
+    """
     if datafiles:
         for i, d in enumerate(datafiles):
             datafiles[i] = os.path.join(SML_TEST_TIF, d)
@@ -133,19 +137,25 @@ def small_ifg_file_list(datafiles=None):
 
 
 def small_data_roipac_unws():
-    """Returns unw file list before prepifg operation
-    input phase data is in radians; these ifgs are in radians - not converted to mm"""
+    """
+    Returns unwrapped file list before prepifg operation
+    input phase data is in radians; these ifgs are in radians - not converted to mm.
+    """
     return glob.glob(join(SML_TEST_OBS, "*.unw"))
 
 
 def small_data_setup_gamma_unws():
-    """Returns unw file list before prepifg operation
-    input phase data is in radians; these ifgs are in radians - not converted to mm"""
+    """
+    Returns unwrapped file list before prepifg operation
+    input phase data is in radians; these interferograms are in radians - not converted to mm.
+    """
     return glob.glob(join(SML_TEST_GAMMA, "*.unw"))
 
 
 def small5_ifgs():
-    """Convenience func to return a subset of 5 linked Ifgs from the testdata"""
+    """
+    Convenience function to return a subset of 5 linked interferograms from the test data.
+    """
     BASE_DIR = tempfile.mkdtemp()
     data_paths = [os.path.join(SML_TEST_TIF, p) for p in IFMS5.split()]
     new_data_paths = [os.path.join(BASE_DIR, os.path.basename(d))
@@ -157,7 +167,9 @@ def small5_ifgs():
 
 
 def small5_mock_ifgs(xs=3, ys=4):
-    '''Returns smaller mocked version of small Ifgs for testing'''
+    """
+    Returns smaller mocked version of small interferograms for testing.
+    """
     ifgs = small5_ifgs()
     for i in ifgs:
         i.open()
@@ -167,12 +179,13 @@ def small5_mock_ifgs(xs=3, ys=4):
 
 
 class MockIfg(object):
-    """Mock Ifg for detailed testing"""
+    """
+    Mock interferogram for detailed testing."""
 
     def __init__(self, ifg, xsize=None, ysize=None):
         """
-        Creates mock Ifg based on a given interferogram. Size args specify the
-        dimensions of the phase band (so the mock ifg can be resized differently
+        Creates mock interferogram based on a given interferogram. Size arguments specify the
+        dimensions of the phase band (so the mock interferogram can be resized differently
         to the source interferogram for smaller test datasets).
         """
         self.dataset = ifg.dataset

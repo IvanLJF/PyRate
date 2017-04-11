@@ -68,7 +68,7 @@ class IfgListTest(unittest.TestCase):
 # SB: this is not used anywhere now
 def sort_list(id_l, master_l, slave_l, nan_frac_l):
     """
-    sort list based on nan_frac
+    Sort list based on nan_frac.
     """
     sorted_list = [(i, m, s, n) for i, m, s, n in
                    zip(id_l, master_l, slave_l, nan_frac_l)]
@@ -219,7 +219,7 @@ class MSTKruskalConnectAndTreesSmallData(unittest.TestCase):
 
 class MatlabMSTTests(unittest.TestCase):
     """
-    Tests to ensure matlab and python mst outputs are the same.
+    Tests to ensure Matlab and Python MST outputs are the same.
     """
     def setUp(self):
         self.ifgs = small_data_setup()
@@ -243,7 +243,7 @@ class MatlabMSTTests(unittest.TestCase):
 
     def test_matlab_mst_kruskal(self):
         """
-        test that the matlab and python mst algos outputs are the same
+        Test that the Matlab and Python MST algorithms outputs are the same.
         """
         ifg_instance = IfgList(datafiles=self.ifg_file_list)
         ifg_list, _ = get_nml(ifg_instance, nodata_value=0)
@@ -260,7 +260,7 @@ class MatlabMSTTests(unittest.TestCase):
 
     def test_matlab_make_mstmat(self):
         """
-        tests equality of boolean mst arrays of both python and matlab.
+        Tests equality of boolean MST arrays of both Python and Matlab.
         """
         ifg_instance = IfgList(datafiles=self.ifg_file_list)
         ifg_list, _ = get_nml(ifg_instance, nodata_value=0)
@@ -282,7 +282,7 @@ class MatlabMSTTests(unittest.TestCase):
 
     def test_matlab_make_mstmat_boolean_array(self):
         """
-        tests equality of boolean mst arrays of both python and matlab.
+        Tests equality of boolean MST arrays of both Python and Matlab.
         """
         ifg_instance = IfgList(datafiles=self.ifg_file_list)
         ifg_list, _ = get_nml(ifg_instance, nodata_value=0)

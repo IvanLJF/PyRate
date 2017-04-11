@@ -36,7 +36,7 @@ from pyrate.shared import warp_required
 
 class GetAnalysisExtents(IfgListMixin, luigi.Task):
     """
-    Dummy analysis extents gather class used during luigi tasks
+    Dummy analysis extents gather class used during luigi tasks.
     """
     crop_opt = luigi.IntParameter(config_path=InputParam(cf.IFG_CROP_OPT))
     ifgx_first = luigi.FloatParameter(default=None,
@@ -82,18 +82,21 @@ class PrepareInterferogram(IfgListMixin, luigi.WrapperTask):
     """
     Produces multilooked/resampled data files for PyRate analysis.
 
-    :param ifgs: sequence of Ifg objs (DEM obj may be included for processing)
-    :param crop_opt: integer cropping type option (see config)
-    :param xlooks: multilooking factor for the X axis
-    :param ylooks: Y axis multilooking factor
-    :param float thresh: (0.0, 1.0). Controls NaN handling when resampling to
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects (DEM object may be included for processing)
+    :param xxx crop_opt: Integer cropping type option (see config)
+    :param xxx xlooks: Multi-looking factor for the X axis
+    :param xxx ylooks: Multi-looking factor for the Y axis
+    :param xxx float thresh: (0.0, 1.0). Controls NaN handling when resampling to
     coarser grids. Value is the proportion above which the number of NaNs in
     an area is considered invalid. thresh=0 resamples to NaN if 1 or more
     contributing cells are NaNs. At 0.25, it resamples to NaN if 1/4 or
     more contributing cells are NaNs. At 1.0, areas are resampled to NaN
     only if all contributing cells are NaNs.
-    :param user_exts: CustomExts tuple with user sepcified lat long corners
-    :param verbose: Controls level of gdalwarp output
+    :param xxx user_exts: CustomExts tuple with user sepcified lat long corners
+    :param xxx verbose: Controls level of gdalwarp output
+
+    :return: xxxx
+    :rtype: xxxx(eg float)    
     """
     # pylint: disable=bad-super-call, no-member
 
@@ -143,7 +146,9 @@ class PrepareInterferogram(IfgListMixin, luigi.WrapperTask):
 
 
 class PrepareInterferograms(IfgListMixin, luigi.WrapperTask):
-    """ Luigi wrapper class """
+    """
+    Luigi wrapper class.
+    """
 
     def __init__(self, *args, **kwargs):
         super(PrepareInterferograms, self).__init__(*args, **kwargs)
@@ -172,5 +177,5 @@ class PrepareInterferograms(IfgListMixin, luigi.WrapperTask):
 
 class PrepifgException(Exception):
     """
-    Prepifg exception class
+    Prepifg exception class.
     """

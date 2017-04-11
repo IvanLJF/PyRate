@@ -39,11 +39,12 @@ def time_series_setup(ifgs, mst, params):
     """
     Convenience function setting up time series computation parameters.
 
-    :param ifgs: xxxx
-    :param mst: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx
+    :param xxx mst: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if len(ifgs) < 1:
         msg = 'Time series requires 2+ interferograms'
@@ -112,11 +113,11 @@ def time_series(ifgs, params, vcmt, mst=None):
     """
     Returns time series data from the given interferograms.
 
-    :param ifgs: Network of interferograms
-    :param params: Configuration parameters
-    :param vcmt: Derived positive definite temporal variance covariance matrix
-    :param mst: Array of interferogram indexes from the MST-matrix (optional)
-    :param parallel: Use parallel processing or not
+    :param xxx(eg str, tuple, int, float...) ifgs: Network of interferograms
+    :param xxx params: Configuration parameters
+    :param xxx vcmt: Derived positive definite temporal variance covariance matrix
+    :param array mst: Array of interferogram indexes from the MST-matrix (optional)
+    :param xxx parallel: Use parallel processing or not
 
     :return: Tuple with the elements:
 
@@ -130,6 +131,7 @@ def time_series(ifgs, params, vcmt, mst=None):
         - *nrows* is the number of rows in the interferograms
         - *ncols* is the  number of columns in the interferograms
         - *nepochs* is the number of unique epochs (dates) covered by the interferograms
+    :rtype: tuple
     """
 
     b0_mat, interp, p_thresh, sm_factor, sm_order, ts_method, ifg_data, mst, \
@@ -175,20 +177,21 @@ def time_series_by_rows(row, b0_mat, sm_factor, sm_order, ifg_data, mst, ncols,
     """
     Time series computation for each row of interferograms.
      
-    :param row: xxxx
-    :param b0_mat: xxxx
-    :param sm_factor: xxxx
-    :param sm_order: xxxx
-    :param ifg_data: xxxx
-    :param mst: xxxx
-    :param ncols: xxxx
-    :param nvelpar: xxxx
-    :param p_thresh: xxxx
-    :param vcmt: xxxx
-    :param ts_method: xxxx
-    :param interp: xxxx
+    :param xxx(eg str, tuple, int, float...) row: xxxx
+    :param xxx b0_mat: xxxx
+    :param xxx sm_factor: xxxx
+    :param xxx sm_order: xxxx
+    :param xxx ifg_data: xxxx
+    :param xxx mst: xxxx
+    :param xxx ncols: xxxx
+    :param xxx nvelpar: xxxx
+    :param xxx p_thresh: xxxx
+    :param xxx vcmt: xxxx
+    :param xxx ts_method: xxxx
+    :param xxx interp: xxxx
      
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     tsvel = np.empty(shape=(ncols, nvelpar), dtype=float32)
     for col in range(ncols):
@@ -203,12 +206,13 @@ def remove_rank_def_rows(b_mat, nvelpar, ifgv, sel):
     """
     Remove rank deficient rows.
     
-    :param b_mat: xxxx
-    :param nvelpar: xxxx
-    :param ifgv: xxxx
-    :param sel: xxxx
+    :param xxx(eg str, tuple, int, float...) b_mat: xxxx
+    :param xxx nvelpar: xxxx
+    :param xxx ifgv: xxxx
+    :param xxx sel: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     _, _, e_var = qr(b_mat, mode='economic', pivoting=True)
     licols = e_var[matrix_rank(b_mat):nvelpar]
@@ -224,20 +228,21 @@ def time_series_by_pixel(row, col, b0_mat, sm_factor, sm_order, ifg_data, mst,
     """
     Time series computation for each pixel.
     
-    :param row: xxxx
-    :param col: xxxx
-    :param b0_mat: xxxx
-    :param sm_factor: xxxx
-    :param sm_order: xxxx
-    :param ifg_data: xxxx
-    :param mst: xxxx
-    :param nvelpar: xxxx
-    :param p_thresh: xxxx
-    :param vcmt: xxxx
-    :param method: xxxx
-    :param interp: xxxx
+    :param xxx(eg str, tuple, int, float...) row: xxxx
+    :param xxx col: xxxx
+    :param xxx b0_mat: xxxx
+    :param xxx sm_factor: xxxx
+    :param xxx sm_order: xxxx
+    :param xxx ifg_data: xxxx
+    :param xxx mst: xxxx
+    :param xxx nvelpar: xxxx
+    :param xxx p_thresh: xxxx
+    :param xxx vcmt: xxxx
+    :param xxx method: xxxx
+    :param xxx interp: xxxx
      
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # check pixel for non-redundant ifgs
     sel = np.nonzero(mst[:, row, col])[0]  # trues in mst are chosen
@@ -282,12 +287,13 @@ def solve_ts_svd(nvelpar, velflag, ifgv, b_mat):
     Solve the linear least squares system using the SVD method.
     Similar to the SBAS method implemented by Berardino et al. 2002.
     
-    :param nvelpar: xxxx
-    :param velflag: xxxx
-    :param ifgv: xxxx
-    :param b_mat: xxxx
+    :param xxx(eg str, tuple, int, float...) nvelpar: xxxx
+    :param xxx velflag: xxxx
+    :param xxx ifgv: xxxx
+    :param xxx b_mat: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pre-allocate the velocity matrix
     tsvel = np.empty(nvelpar, dtype=float32) * np.nan
@@ -370,14 +376,15 @@ def plot_timeseries(tsincr, tscum, tsvel, output_dir):  # pragma: no cover
 
     A very basic plotting function used in code development
 
-    .. todo:: this should be moved and tidied up
+    todo:: this should be moved and tidied up
     
-    :param tsincr: xxxx
-    :param tscum: xxxx
-    :param tsvel: xxxx
-    :param output_dir: xxxx
+    :param xxx(eg str, tuple, int, float...) tsincr: xxxx
+    :param xxx tscum: xxxx
+    :param xxx tsvel: xxxx
+    :param xxx output_dir: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     nvelpar = len(tsincr[0, 0, :])
@@ -409,9 +416,10 @@ def missing_option_error(option):
     """
     Internal convenience function for raising similar missing option errors.
     
-    :param option: xxxx
+    :param xxx(eg str, tuple, int, float...) option: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     msg = "Missing '%s' option in config file" % option
     raise ConfigException(msg)

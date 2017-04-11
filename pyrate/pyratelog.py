@@ -28,9 +28,10 @@ def configure(verbosity):
     """
     Function to configure logging properties.
     
-    :param verbosity: 'DEBUG', 'INFO', 'WARNING', or 'ERROR'
+    :param str verbosity: 'DEBUG', 'INFO', 'WARNING', or 'ERROR'
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     log = logging.getLogger("")
     log.setLevel(verbosity)

@@ -53,11 +53,12 @@ def get_tiles(ifg_path, rows, cols):
     """
     Break up the interferograms into tiles based on user supplied rows and columns.
 
-    :param ifg_path: List of destination tifs
-    :param rows: Number of rows to break each interferogram into
-    :param cols: Number of columns to break each interferogram into
+    :param list ifg_path: List of destination tifs
+    :param int rows: Number of rows to break each interferogram into
+    :param int cols: Number of columns to break each interferogram into
 
-    :return tiles: List of shared.Tile instances
+    :return: tiles: List of shared.Tile instances
+    :rtype: list
     """
     ifg = Ifg(ifg_path)
     ifg.open(readonly=True)
@@ -70,9 +71,10 @@ def _join_dicts(dicts):
     """
     xxxx
     
-    :param dicts: List of dictionaries to join
+    :param dict dicts: List of dictionaries to join
 
-    :return assembled_dict: Dictionary after join
+    :return: assembled_dict: Dictionary after join
+    :rtype: dict
     """
     if dicts is None:  # pragma: no cover
         return
@@ -86,11 +88,12 @@ def create_ifg_dict(dest_tifs, params, tiles):
     2. Save the preread_ifgs dictionary with information about the interferograms that are
     later used for fast loading of Ifg files in IfgPart class.
 
-    :param dest_tifs: List of destination tifs
-    :param params: Config dictionary
-    :param tiles: List of all Tile instances
+    :param list dest_tifs: List of destination tifs
+    :param dict params: Config dictionary
+    :param list tiles: List of all Tile instances
 
-    :return preread_ifgs: Dictionary containing information regarding interferograms that are used downstream
+    :return: preread_ifgs: Dictionary containing information regarding interferograms that are used downstream
+    :rtype: dict
     """
     ifgs_dict = {}
     process_tifs = mpiops.array_split(dest_tifs)
@@ -133,12 +136,13 @@ def mst_calc(dest_tifs, params, tiles, preread_ifgs):
     MPI function that control each process during MPI run
     Reference phase computation using method 2.
 
-    :params dest_tifs: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param tiles: List of all tiles used during MPI processes
-    :param preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
+    :params list dest_tifs: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param list tiles: List of all tiles used during MPI processes
+    :param dict preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     process_tiles = mpiops.array_split(tiles)
 
@@ -170,11 +174,12 @@ def ref_pixel_calc(ifg_paths, params):
     """
     Reference pixel calculation setup.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
 
-    :return refx: Reference pixel x-coordinate
-    :return refy: Reference pixel y-coordinate
+    :return: refx: Reference pixel x-coordinate
+    :return: refy: Reference pixel y-coordinate
+    :rtype: xxxx (eg float)
     """
     # unlikely, but possible the refpixel can be (0,0)
     # check if there is a pre-specified reference pixel coord
@@ -208,10 +213,11 @@ def find_ref_pixel(ifg_paths, params):
     """
     Find reference pixel using MPI Parameters.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
 
     :return Tuple of (refy, refx).
+    :rtype: tuple
     """
     half_patch_size, thresh, grid = refpixel.ref_pixel_setup(ifg_paths, params)
     process_grid = mpiops.array_split(grid)
@@ -228,12 +234,13 @@ def save_ref_pixel_blocks(grid, half_patch_size, ifg_paths, params):
     """
     xxxx
     
-    :param grid: List of tuples (y, x) corresponding reference pixel grids
-    :param half_patch_size: Patch size in pixels corresponding to reference pixel grids
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
+    :param list grid: List of tuples (y, x) corresponding reference pixel grids
+    :param xxx(eg str, tuple, int, float...) half_patch_size: Patch size in pixels corresponding to reference pixel grids
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     log.info('Saving ref pixel blocks')
     outdir = params[cf.TMPDIR]
@@ -258,11 +265,12 @@ def orb_fit_calc(ifg_paths, params, preread_ifgs=None):
     """
     Orbital fit correction.
 
-    :param ifg_paths: List of ifg paths
-    :param params: Parameters dictionary corresponding to config file
-    :param preread_ifgs: Dictionary containing information regarding interferograms
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param dict preread_ifgs: Dictionary containing information regarding interferograms
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     #log.info('Calculating orbfit correction')
     if params[cf.ORBITAL_FIT_METHOD] == 1:
@@ -284,13 +292,14 @@ def ref_phase_estimation(ifg_paths, params, refpx, refpy, preread_ifgs=None):
     """
     Reference phase estimation.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param refpx: Reference pixel x-coordinate
-    :param refpy: Reference pixel y-coordinate
-    :param preread_ifgs: Dictionary containing information regarding interferograms
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param xxx(eg str, tuple, int, float...) refpx: Reference pixel x-coordinate
+    :param xxx refpy: Reference pixel y-coordinate
+    :param dict preread_ifgs: Dictionary containing information regarding interferograms
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # perform some checks on existing ifgs
     if preread_ifgs and mpiops.rank == MASTER_PROCESS:
@@ -333,12 +342,13 @@ def ref_phs_method2(ifg_paths, params, refpx, refpy):
     """
     Reference phase computation using method 2.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param refpx: Reference pixel x-coordinate
-    :param refpy: Reference pixel y-coordinate
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param xxx(eg str, tuple, int, float...) refpx: Reference pixel x-coordinate
+    :param xxx refpy: Reference pixel y-coordinate
 
-    :return ref_phs: Array of reference phase of shape ifg.shape
+    :return: ref_phs: Array of reference phase of shape ifg.shape
+    :rtype: array
     """
     half_chip_size = int(np.floor(params[cf.REF_CHIP_SIZE] / 2.0))
     chipsize = 2 * half_chip_size + 1
@@ -368,10 +378,11 @@ def ref_phs_method1(ifg_paths, comp):
     """
     Reference phase computation using method 1.
 
-    :param ifg_paths: List of interferogram paths
-    :param comp: Array of phase sum of all interferograms of shape ifg.shape
+    :param list ifg_paths: List of interferogram paths
+    :param array comp: Array of phase sum of all interferograms of shape ifg.shape
 
-    :return ref_phs: Array of reference phase of shape ifg.shape
+    :return: ref_phs: Array of reference phase of shape ifg.shape
+    :rtype: array
     """
 
     def _inner(ifg_path):
@@ -398,12 +409,13 @@ def process_ifgs(ifg_paths, params, rows, cols):
     """
     Top level function to perform PyRate correction steps on given interferograms.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param rows: Number of rows to break each interferogram into
-    :param cols: Number of columns to break each interferogram into
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param int rows: Number of rows to break each interferogram into
+    :param int cols: Number of columns to break each interferogram into
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if mpiops.size > 1:
         params[cf.PARALLEL] = False
@@ -456,13 +468,14 @@ def linrate_calc(ifg_paths, params, vcmt, tiles, preread_ifgs):
     """
     MPI capable linrate calculation.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param vcmt: vcmt array
-    :param tiles: List of all tiles used during MPI processes
-    :param preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param array vcmt: vcmt array
+    :param list tiles: List of all tiles used during MPI processes
+    :param dict preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     process_tiles = mpiops.array_split(tiles)
@@ -492,12 +505,13 @@ def maxvar_alpha_calc(ifg_paths, params, preread_ifgs):
     """
     MPI capable maxvar and vcmt computation.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param dict preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
 
-    :return maxvar: Array of shape (nifgs, 1)
-    :return vcmt: Array of shape (nifgs, nifgs)
+    :return: maxvar: Array of shape (nifgs, 1)
+    :return: vcmt: Array of shape (nifgs, nifgs)
+    :rtype: xxxx (eg float)
     """
     process_indices = mpiops.array_split(range(len(ifg_paths)))
     prcs_ifgs = mpiops.array_split(ifg_paths)
@@ -529,10 +543,11 @@ def vcm_calc(preread_ifgs, maxvar):
     """
     Temporal Variance-Covariance Matrix computation.
 
-    :param preread_ifgs: Dictionary containing interferograms characteristics for efficient computing
-    :param maxvar: Array of shape (nifgs, 1)
+    :param dict preread_ifgs: Dictionary containing interferograms characteristics for efficient computing
+    :param array maxvar: Array of shape (nifgs, 1)
 
-    :return vcmt: Array of shape (nifgs, nifgs)
+    :return: vcmt: Array of shape (nifgs, nifgs)
+    :rtype: array
     """
     maxvar = mpiops.comm.bcast(maxvar, root=0)
     log.info('Assembling Temporal Variance-Covariance Matrix')
@@ -544,10 +559,11 @@ def phase_sum(ifg_paths, params):
     """
     Save phase data and phs_sum used in the reference phase estimation.
 
-    :param ifg_paths: List of paths to interferograms
-    :param params: Config dictionary
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Config dictionary
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx (eg float)    
     """
     p_paths = mpiops.array_split(ifg_paths)
     ifg = Ifg(p_paths[0])
@@ -584,13 +600,14 @@ def timeseries_calc(ifg_paths, params, vcmt, tiles, preread_ifgs):
     """
     Time series calculation.
 
-    :param ifg_paths: List of interferogram paths
-    :param params: Parameters dictionary corresponding to config file
-    :param vcmt: vcmt array
-    :param tiles: List of all tiles used during MPI processes
-    :param preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
+    :param list ifg_paths: List of interferogram paths
+    :param dict params: Parameters dictionary corresponding to config file
+    :param array vcmt: vcmt array
+    :param list tiles: List of all tiles used during MPI processes
+    :param dict preread_ifgs: Dictionary containing interferogram characteristics for efficient computing
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx (eg float)
     """
     process_tiles = mpiops.array_split(tiles)
     log.info('Calculating time series')
@@ -610,6 +627,8 @@ def timeseries_calc(ifg_paths, params, vcmt, tiles, preread_ifgs):
 
 
 def main(config_file, rows, cols):  # pragma: no cover
-    """ linear rate and timeseries execution starts here """
+    """
+    Linear rate and timeseries execution starts here.
+    """
     _, dest_paths, pars = cf.get_ifg_paths(config_file)
     process_ifgs(sorted(dest_paths), pars, rows, cols)

@@ -76,17 +76,18 @@ def orbital_correction(ifgs_or_ifg_paths, params, mlooked=None, offset=True,
     """
     Removes orbital error from given interferograms.
 
-    NB: the ifg data is modified in situ, rather than create intermediate files.
+    NB: the interferogram data is modified in situ, rather than create intermediate files.
     The network method assumes the given interferograms have already been reduced to a
     minimum set from an MST type operation.
 
-    :param ifgs: Sequence ofintererogram objects to correct
-    :param degree: PLANAR, QUADRATIC or PART_CUBIC
-    :param method: INDEPENDENT_METHOD or NETWORK_METHOD
-    :param mlooked: Sequence of multi-looked interferograms (must correspond to 'ifgs' arg)
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects to correct
+    :param str degree: PLANAR, QUADRATIC or PART_CUBIC
+    :param str method: INDEPENDENT_METHOD or NETWORK_METHOD
+    :param mlooked: Sequence of multi-looked interferograms (must correspond to 'ifgs' argument)
     :param bool offset: True/False to include the constant/offset component
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     degree = params[cf.ORBITAL_FIT_DEGREE]
     method = params[cf.ORBITAL_FIT_METHOD]
@@ -123,9 +124,9 @@ def orbital_correction(ifgs_or_ifg_paths, params, mlooked=None, offset=True,
 
 
 def _validate_mlooked(mlooked, ifgs):
-    '''
+    """
     Basic sanity checking of the multi-looked interferograms.
-    '''
+    """
 
     if len(mlooked) != len(ifgs):
         msg = "Mismatching # ifgs and # multilooked ifgs"
@@ -137,9 +138,9 @@ def _validate_mlooked(mlooked, ifgs):
 
 
 def _get_num_params(degree, offset=None):
-    '''
+    """
     Returns number of model parameters.
-    '''
+    """
 
     if degree == PLANAR:
         nparams = 2
@@ -160,14 +161,15 @@ def _get_num_params(degree, offset=None):
 def independent_correction(ifg, degree, offset, params):
     """
     Calculates and removes orbital correction from an interferogram.
-    .. warn:: This will write orbital error corrected phase_data in the interferograms.
+    warn:: This will write orbital error corrected phase_data in the interferograms.
 
-    :param ifg: the interferogram to remove remove the orbital error from
-    :param degree: Type of model to use PLANAR, QUADRATIC etc
-    :param offset: Boolean
-    :param params: Parameter dictionary
+    :param xxx(eg str, tuple, int, float...) ifg: the interferogram to remove remove the orbital error from
+    :param str degree: Type of model to use PLANAR, QUADRATIC etc
+    :param bool offset: xxxx
+    :param dict params: Parameter dictionary
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     ifg = shared.Ifg(ifg) if isinstance(ifg, str) else ifg
     if not ifg.is_open:
@@ -200,18 +202,19 @@ def network_correction(ifgs, degree, offset, params, m_ifgs=None,
                        preread_ifgs=None):
     """
     Calculates orbital correction model, removing this from the interferograms.
-    .. warn:: This will write orbital error corrected phase_data in the interferograms.
+    warn:: This will write orbital error corrected phase_data in the interferograms.
 
-    :param ifgs: Interferograms reduced to a minimum tree from prior
+    :param xxx(eg str, tuple, int, float...) ifgs: Interferograms reduced to a minimum tree from prior
         MST calculations
-    :param degree: PLANAR, QUADRATIC or PART_CUBIC
-    :param offset: True to calculate the model using offsets
-    :param params: Parameter dictionary
-    :param m_ifgs: Multi-looked orbfit interferograms (sequence must be mlooked
-        versions of 'ifgs' arg)
+    :param xxx degree: PLANAR, QUADRATIC or PART_CUBIC
+    :param xxx offset: True to calculate the model using offsets
+    :param xxx params: Parameter dictionary
+    :param xxx m_ifgs: Multi-looked orbfit interferograms (sequence must be mlooked
+        versions of 'ifgs' argument)
     :param preread_ifgs: Parameters dictionary corresponding to config file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=too-many-locals, too-many-arguments
     src_ifgs = ifgs if m_ifgs is None else m_ifgs
@@ -278,7 +281,7 @@ def _save_orbital_error_corrected_phase(ifg):
     Convenceince function to update metadata and save latest phase after
     orbital fit correction.
   
-    :param ifg: Interferogram class instance
+    :param xxx(eg str, tuple, int, float...) ifg: Interferogram class instance
     """
     # set orbfit tags after orbital error correction
     ifg.dataset.SetMetadataItem(ifc.PYRATE_ORBITAL_ERROR, ifc.ORB_REMOVED)
@@ -291,12 +294,13 @@ def get_design_matrix(ifg, degree, offset, scale=100.0):
     """
     Simple design matrix with columns for model parameters.
 
-    :param ifg: interferogram to base the DM on
-    :param degree: PLANAR, QUADRATIC or PART_CUBIC
-    :param offset: True to include offset cols, otherwise False
-    :param scale: amount to divide cell size by for improving inversion robustness
+    :param xxx(eg str, tuple, int, float...) ifg: interferogram to base the design matrix (DM) on
+    :param xxx degree: PLANAR, QUADRATIC or PART_CUBIC
+    :param xxx offset: True to include offset cols, otherwise False
+    :param xxx scale: amount to divide cell size by for improving inversion robustness
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     if degree not in [PLANAR, QUADRATIC, PART_CUBIC]:
@@ -344,11 +348,12 @@ def get_network_design_matrix(ifgs, degree, offset):
     Larger format design matrix for networked error correction.
     The network design matrix includes rows which relate to those of NaN cells.
 
-    :param ifgs: sequence of interferograms
-    :param degree: PLANAR, QUADRATIC or PART_CUBIC
-    :param offset: True to include offset cols, otherwise False
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferograms
+    :param xxx degree: PLANAR, QUADRATIC or PART_CUBIC
+    :param xxx offset: True to include offset cols, otherwise False
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if degree not in [PLANAR, QUADRATIC, PART_CUBIC]:
         raise OrbitalError("Invalid degree argument")
@@ -401,11 +406,12 @@ def remove_orbital_error(ifgs, params, preread_ifgs=None):
     """
     Wrapper for orbital error removal functionality.
 
-    :param ifgs: List of interferograms or interferogram paths
-    :param params: Dict corresponding to config parameters
-    :param preread_ifgs: Dict containing information regarding MPI jobs (optional)
+    :param list ifgs: List of interferograms or interferogram paths
+    :param dict params: Dictionary corresponding to config parameters
+    :param dict preread_ifgs: Dictionary containing information regarding MPI jobs (optional)
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if not params[cf.ORBITAL_FIT]:
         log.info('Orbital correction not required')

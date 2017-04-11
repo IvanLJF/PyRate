@@ -16,7 +16,7 @@
 """
 This Python module converts interferogram input files to a common geotiff
 format with PyRate specific metadata headers. The module also implements
-multilooking/downsampling and cropping operations to reduce the size of
+multi-looking/downsampling and cropping operations to reduce the size of
 the computational problem.
 """
 # pylint: disable=too-many-arguments,invalid-name
@@ -54,9 +54,10 @@ def is_number(s):
     """
     Check whether string can be converted to float.
     
-    :param: s: xxxxx
+    :param xxx(eg str, tuple, int, float...) s: xxxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     try:
         float(s)
@@ -76,13 +77,14 @@ def get_analysis_extent(
     """
     Returns extents/bounding box args for gdalwarp as strings.
 
-    :param: crop_opt: xxxxx
-    :param: rasters: xxxxx
-    :param: xlooks: xxxxx
-    :param: ylooks: xxxxx
-    :param: user_exts: xxxxx
+    :param xxx(eg str, tuple, int, float...) crop_opt: xxxxx
+    :param xxx rasters: xxxxx
+    :param xxx xlooks: xxxxx
+    :param xxx ylooks: xxxxx
+    :param xxx user_exts: xxxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     if crop_opt not in CROP_OPTIONS:
@@ -118,15 +120,16 @@ def prepare_ifg(
     """
     Resample and crop interferograms/DEMs.
 
-    :param: raster_path: xxxxx
-    :param: xlooks: xxxxx
-    :param: ylooks: xxxxx
-    :param: exts: xxxxx
-    :param: thresh: xxxxx
-    :param: crop_out: xxxxx
-    :param: write_to_disc: xxxxx
+    :param xxx(eg str, tuple, int, float...) raster_path: xxxxx
+    :param xxx xlooks: xxxxx
+    :param xxx ylooks: xxxxx
+    :param xxx exts: xxxxx
+    :param xxx thresh: xxxxx
+    :param xxx crop_out: xxxxx
+    :param xxx write_to_disc: xxxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     do_multilook = xlooks > 1 or ylooks > 1
@@ -154,9 +157,10 @@ def dummy_warp(renamed_path):
     """ 
     Convenience dummy operation.
 
-    :param: renamed_path: xxxxx
+    :param xxx(eg str, tuple, int, float...) renamed_path: xxxxx
     
-    :return xxxx     
+    :return: xxxx
+    :rtype: xxxx(eg float)     
     """
     ifg = dem_or_ifg(renamed_path)
     ifg.open()
@@ -178,22 +182,23 @@ def prepare_ifgs(
     """
     Produces multi-looked/resampled data files for PyRate analysis.
 
-    :param raster_data_paths: Sequence of interferogram data paths
+    :param xxx(eg str, tuple, int, float...) raster_data_paths: Sequence of interferogram data paths
             (Currently DEMs are not supported)
-    :param crop_opt: Integer cropping type option (see config)
-    :param xlooks: Multi-looking factor for the X axis
-    :param ylooks: Multi-looking factor for the Y axis
-    :param float thresh: (0.0, 1.0). Controls NaN handling when resampling to
+    :param xxx crop_opt: Integer cropping type option (see config)
+    :param xxx xlooks: Multi-looking factor for the X axis
+    :param xxx ylooks: Multi-looking factor for the Y axis
+    :param xxx float thresh: (0.0, 1.0). Controls NaN handling when resampling to
      coarser grids. Value is the proportion above which the number of NaNs in
      an area is considered invalid. thresh=0 resamples to NaN if 1 or more
      contributing cells are NaNs. At 0.25, it resamples to NaN if 1/4 or
      more contributing cells are NaNs. At 1.0, areas are resampled to NaN
      only if all contributing cells are NaNs.
-    :param user_exts: CustomExts tuple with user specified lat long corners
-    :param verbose: Controls level of gdalwarp output
-    :param write_to_disc: Wether to write to disc during warp
+    :param xxx user_exts: CustomExts tuple with user specified lat long corners
+    :param xxx verbose: Controls level of gdalwarp output
+    :param xxx write_to_disc: Whether to write to disc during warp
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # use metadata check to check whether it's a dem or ifg
     rasters = [dem_or_ifg(r) for r in raster_data_paths]
@@ -206,11 +211,12 @@ def prepare_ifgs(
 
 def dem_or_ifg(data_path):
     """ 
-    Whether tif is a DEM or interferogram
+    Whether tif is a DEM or interferogram.
     
-    :param: data_path: xxxxx
+    :param xxx(eg str, tuple, int, float...) data_path: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     ds = gdal.Open(data_path)
     md = ds.GetMetadata()
@@ -222,13 +228,14 @@ def dem_or_ifg(data_path):
 
 def get_extents(ifgs, crop_opt, user_exts=None):
     """
-    Returns extents/bounding box args for gdalwarp as strings.
+    Returns extents/bounding box arguments for gdalwarp as strings.
 
-    :param: ifgs: xxxxx
-    :param: crop_opt: xxxxx
-    :param: user_exts: xxxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxxx
+    :param xxx crop_opt: xxxxx
+    :param xxx user_exts: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float) 
     """
 
     if crop_opt == MINIMUM_CROP:
@@ -247,7 +254,7 @@ def get_extents(ifgs, crop_opt, user_exts=None):
 # TODO: push out to a shared module
 def _file_ext(raster):
     """
-    Returns file ext string based on type of raster.
+    Returns file extension string based on type of raster.
     """
     if isinstance(raster, Ifg):
         return "tif"
@@ -300,18 +307,19 @@ def _resample_ifg(ifg, cmd, x_looks, y_looks, thresh, md=None):
 def warp(ifg, x_looks, y_looks, extents, resolution, thresh, crop_out,
          write_to_disc=True):
     """
-    Resamples 'ifg' and returns a new interferogram object.
+    Resamples interferogram and returns a new interferogram object.
 
-    :param xlooks: Factor to scale X axis by, 5 is 5x smaller, 1 is no change
-    :param ylooks: Factor to scale Y axis by, 5 is 5x smaller, 1 is no change
-    :param extents: Georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
-    :param resolution: [xres, yres] or None. Sets resolution output interferogram metadata.
+    :param xxx(eg str, tuple, int, float...) xlooks: Factor to scale X axis by, 5 is 5x smaller, 1 is no change
+    :param xxx ylooks: Factor to scale Y axis by, 5 is 5x smaller, 1 is no change
+    :param xxx extents: Georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
+    :param xxx resolution: [xres, yres] or None. Sets resolution output interferogram metadata.
         Use *None* if raster size is not being changed
-    :param thresh: See thresh in prepare_ifgs()
-    :param verbose: True to print gdalwarp output to stdout
-    :param write_to_disc: Whether to write to disc during warp
+    :param xxx thresh: See thresh in prepare_ifgs()
+    :param xxx verbose: True to print gdalwarp output to stdout
+    :param xxx write_to_disc: Whether to write to disc during warp
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if x_looks != y_looks:
         raise ValueError('X and Y looks mismatch')
@@ -348,13 +356,14 @@ def resample(data, xscale, yscale, thresh):
     Resamples/averages 'data' to return an array from the averaging of blocks
     of several tiles in 'data'. NB: Assumes incoherent cells are NaNs.
 
-    :param data: Source array to resample to different size
-    :param xscale: Number of cells to average along X axis
-    :param yscale: Number of Y axis cells to average
-    :param thresh: Minimum allowable proportion of NaN cells (range from 0.0-1.0), eg. 0.25 = 1/4 or
+    :param xxx data: Source array to resample to different size
+    :param xxx xscale: Number of cells to average along X axis
+    :param xxx yscale: Number of cells to average along Y axis
+    :param xxx thresh: Minimum allowable proportion of NaN cells (range from 0.0-1.0), eg. 0.25 = 1/4 or
         more as NaNs results in a NaN value for the output cell
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     if thresh < 0 or thresh > 1:
         raise ValueError("threshold must be >= 0 and <= 1")
@@ -379,11 +388,12 @@ def resample(data, xscale, yscale, thresh):
 
 def check_resolution(ifgs):
     """
-    Verifies Ifg resolutions are equal for the given grids.
+    Verifies interferogram resolutions are equal for the given grids.
 
-    :param: ifgs: xxxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     for var in ['x_step', 'y_step']:
@@ -397,10 +407,11 @@ def check_looks(xlooks, ylooks):
     """
     Verifies looks parameters are valid.
 
-    :param: xlooks: xxxx
-    :param: ylooks: xxxx
+    :param xxx(eg str, tuple, int, float...) xlooks: xxxx
+    :param xxx ylooks: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     if not (isinstance(xlooks, Number) and
@@ -418,9 +429,10 @@ def min_bounds(ifgs):
     """
     Returns bounds for overlapping area of the given interferograms.
 
-    :param: ifgs: xxxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     xmin = max([i.x_first for i in ifgs])
@@ -434,9 +446,10 @@ def max_bounds(ifgs):
     """
     Returns bounds for the total area covered by the given interferograms.
 
-    :param: ifgs: xxxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     xmin = min([i.x_first for i in ifgs])
@@ -450,9 +463,10 @@ def get_same_bounds(ifgs):
     """
     Check and return bounding box for ALREADY_SAME_SIZE option.
 
-    :param: ifgs: xxxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     tfs = [i.dataset.GetGeoTransform() for i in ifgs]
@@ -475,13 +489,14 @@ def custom_bounds(ifgs, xw, ytop, xe, ybot):
     """
     Check and modify input custom crop bounds to line up with grid interval.
 
-    :param: ifgs: xxxx
-    :param: xw: xxxx
-    :param: ytop: xxxx
-    :param: xe: xxxx
-    :param: ybot: xxxx
+    :paramv xxx(eg str, tuple, int, float...) ifgs: xxxx
+    :param xxx xw: xxxx
+    :param xxx ytop: xxxx
+    :param xxx xe: xxxx
+    :param xxx ybot: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=too-many-locals
     # pylint: disable=too-many-branches
@@ -540,15 +555,16 @@ def custom_bounds(ifgs, xw, ytop, xe, ybot):
 
 def check_crop_coords(ifgs, xmin, ymin, xmax, ymax):
     """
-    Ensures cropping coords line up with grid system within tolerance.
+    Ensures cropping coordinates line up with grid system within tolerance.
 
-    :param: ifgs: xxxx
-    :param: xmin: xxxx
-    :param: ymin: xxxx
-    :param: xmax: xxxx
-    :param: ymax: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx
+    :param xxx xmin: xxxx
+    :param xxx ymin: xxxx
+    :param xxx xmax: xxxx
+    :param xxx ymax: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     # NB: assumption is the first Ifg is correct, so only test against it
@@ -580,9 +596,10 @@ def extents_from_params(params):
     """ 
     Custom extents from supplied parameters.
 
-    :param: params: xxxxx
+    :param xxx(eg str, tuple, int, float...) params: xxxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     keys = (cf.IFG_XFIRST, cf.IFG_YFIRST, cf.IFG_XLAST, cf.IFG_YLAST)
     return CustomExts(*[params[k] for k in keys])

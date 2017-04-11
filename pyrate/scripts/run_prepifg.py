@@ -48,9 +48,10 @@ def main(params=None):
     """
     xxxx
 
-    :param params: Parameters dictionary read in from the config file
+    :param dict params: Parameters dictionary read in from the config file
 
-    :return:
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # TODO: looks like base_ifg_paths are ordered according to ifg list
     # This probably won't be a problem because input list won't be reordered
@@ -107,10 +108,11 @@ def roipac_prepifg(base_ifg_paths, params):
     ROI_PAC prepifg which combines both conversion to geotiff and multi-looking
      and cropping.
 
-    :param base_ifg_paths: List of unwrapped interferograms
-    :param params: Parameters dictionary corresponding to config file
+    :param list base_ifg_paths: List of unwrapped interferograms
+    :param dict params: Parameters dictionary corresponding to config file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     log.info("Preparing ROI_PAC format interferograms")
     parallel = params[cf.PARALLEL]
@@ -144,10 +146,11 @@ def gamma_prepifg(base_unw_paths, params):
     GAMMA prepifg which combines both conversion to geotiff and multi-looking
      and cropping.
 
-    :param base_unw_paths: List of unwrapped interferograms
-    :param params: Parameters dictionary corresponding to config file
+    :param list base_unw_paths: List of unwrapped interferograms
+    :param dict params: Parameters dictionary corresponding to config file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=expression-not-assigned
     log.info("Preparing GAMMA format interferograms")
@@ -183,12 +186,13 @@ def gamma_prepifg(base_unw_paths, params):
 
 def gamma_multiprocessing(unw_path, params):
     """
-    Gamma multiprocessing wrapper for geotif conversion.
+    GAMMA multiprocessing wrapper for geotif conversion.
 
-    :param unw_path: Wnwrapped interferogram path
-    :param params: Parameters dictionary corresponding to config file
+    :param str unw_path: Wnwrapped interferogram path
+    :param dict params: Parameters dictionary corresponding to config file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     dem_hdr_path = params[cf.DEM_HEADER_FILE]
     slc_dir = params[cf.SLC_DIR]

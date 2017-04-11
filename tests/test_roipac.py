@@ -129,7 +129,9 @@ class RoipacCommandLine(unittest.TestCase):
 
 
 class RoipacToGeoTiffTests(unittest.TestCase):
-    """Tests conversion of GAMMA rasters to custom PyRate GeoTIFF"""
+    """
+    Tests conversion of ROI_PAC rasters to custom PyRate GeoTIFF.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -250,7 +252,9 @@ class DateParsingTests(unittest.TestCase):
 
 
 class HeaderParsingTests(unittest.TestCase):
-    """Verifies ROIPAC headers are parsed correctly."""
+    """
+    Verifies ROI_PAC headers are parsed correctly.
+    """
 
     # short format header tests
     def test_parse_short_roipac_header(self):

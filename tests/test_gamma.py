@@ -116,7 +116,9 @@ class GammaCommandLineTests(unittest.TestCase):
 
 
 class GammaToGeoTiffTests(unittest.TestCase):
-    """Tests conversion of GAMMA rasters to custom PyRate GeoTIFF"""
+    """
+    Tests conversion of GAMMA rasters to custom PyRate GeoTIFF.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -221,7 +223,9 @@ class GammaToGeoTiffTests(unittest.TestCase):
 
 
 class GammaHeaderParsingTests(unittest.TestCase):
-    'Tests conversion of GAMMA headers to Py dicts'
+    """
+    Tests conversion of GAMMA headers to Python dictionaries.
+    """
 
     def test_parse_gamma_epoch_header(self):
         # minimal required headers are:
@@ -278,7 +282,9 @@ H1_ERR2 = {ifc.MASTER_DATE : date(2009, 8, 17),
 
 
 class HeaderCombinationTests(unittest.TestCase):
-    'Tests GAMMA epoch and DEM headers can be combined into a single Py dict'
+    """
+    Tests GAMMA epoch and DEM headers can be combined into a single Python dictionary.
+    """
 
     def setUp(self):
         self.err = gamma.GammaException

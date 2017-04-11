@@ -51,7 +51,7 @@ def default_params():
 
 class SinglePixelIfg(object):
     """
-    A single pixel ifg (interferogram) solely for unit testing
+    A single pixel interferogram solely for unit testing.
     """
 
     def __init__(self, master, slave, phase, nan_fraction):
@@ -64,15 +64,18 @@ class SinglePixelIfg(object):
 
     def convert_to_nans(self, val=0):
         """
-        Converts given values in phase data to NaNs
-        val - value to convert, default is 0
+        Converts given values in phase data to NaNs.
+        
+        :param: val: Value to convert, default is 0
         """
         self.phase_data = where(self.phase_data == val, nan, self.phase_data)
         self.nan_converted = True
 
 
 class TimeSeriesTests(unittest.TestCase):
-    """Verifies error checking capabilities of the time_series function"""
+    """
+    Verifies error checking capabilities of the time_series function.
+    """
 
     @classmethod
     def setUpClass(cls):
@@ -102,7 +105,7 @@ class TimeSeriesTests(unittest.TestCase):
 
     def test_time_series_unit(self):
         """
-        Checks that the code works the same as the calculated example
+        Checks that the code works the same as the calculated example.
         """
         imaster = asarray([1, 1, 2, 2, 3, 3, 4, 5])
         islave = asarray([2, 4, 3, 4, 5, 6, 6, 6])
@@ -128,7 +131,7 @@ class TimeSeriesTests(unittest.TestCase):
 
 class MatlabTimeSeriesEquality(unittest.TestCase):
     """
-    Checks the python function to that of Matlab Pirate ts.m and tsinvlap.m
+    Checks the Python function to that of Matlab Pirate ts.m and tsinvlap.m
     functionality.
     """
 
@@ -197,7 +200,7 @@ class MatlabTimeSeriesEquality(unittest.TestCase):
 
     def test_time_series_equality_parallel_by_rows(self):
         """
-        check time series parallel by rows jobs
+        Check time series parallel by rows jobs.
         """
 
         self.assertEqual(self.tsincr_1.shape, self.tscum_1.shape)
@@ -211,7 +214,7 @@ class MatlabTimeSeriesEquality(unittest.TestCase):
 
     def test_time_series_equality_parallel_by_the_pixel(self):
         """
-        check time series parallel by pixel jobs
+        Check time series parallel by pixel jobs.
         """
         self.assertEqual(self.tsincr_2.shape, self.tscum_2.shape)
         self.assertEqual(self.tsvel_2.shape, self.tsincr_2.shape)
@@ -224,7 +227,7 @@ class MatlabTimeSeriesEquality(unittest.TestCase):
 
     def test_time_series_equality_serial_by_the_pixel(self):
         """
-        check time series
+        Check time series.
         """
 
         self.assertEqual(self.tsincr_0.shape, self.tscum_0.shape)
@@ -238,7 +241,7 @@ class MatlabTimeSeriesEquality(unittest.TestCase):
 
 class MatlabTimeSeriesEqualityMethod2Interp0(unittest.TestCase):
     """
-    Checks the python function to that of Matlab Pirate ts.m and tsinvlap.m
+    Checks the Python function to that of Matlab Pirate ts.m and tsinvlap.m
     functionality.
     """
     @classmethod

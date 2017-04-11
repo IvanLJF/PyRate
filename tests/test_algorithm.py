@@ -72,7 +72,7 @@ class LeastSquaresTests(TestCase):
 
 class AlgorithmTests(TestCase):
     """
-    Misc unittests for functions in the algorithm module.
+    Miscellaneous unit tests for functions in the algorithm module.
     """
 
     def test_is_square(self):
@@ -174,7 +174,7 @@ class DateLookupTests(TestCase):
 
 class EpochsTests(TestCase):
     """
-    Unittests for the EpochList class.
+    Unit tests for the EpochList class.
     """
 
     def test_get_epochs(self):

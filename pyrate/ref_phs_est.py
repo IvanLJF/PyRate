@@ -32,13 +32,14 @@ def estimate_ref_phase(ifgs, params, refpx, refpy):
     """
     xxxxx
     
-    :param ifgs: List of interferograms
-    :param params: Parameters of the simulation
-    :param refpx: Reference pixel X found by ref pixel method
-    :param refpy: Reference pixel Y found by ref pixel method
+    :param xxx(eg str, tuple, int, float...) ifgs: List of interferograms
+    :param xxx params: Parameters of the simulation
+    :param xxx refpx: Reference pixel X found by ref pixel method
+    :param xxx refpy: Reference pixel Y found by ref pixel method
     
-    :return ref_phs: Reference phase correction
-    :return ifgs: Reference phase data removed from list of interferograms
+    :return: ref_phs: Reference phase correction
+    :return: ifgs: Reference phase data removed from list of interferograms
+    :rtype: xxxx(eg float)
     """
     check_ref_phs_ifgs(ifgs)
 
@@ -61,13 +62,14 @@ def est_ref_phase_method2(ifgs, params, refpx, refpy):
     """
     Reference phase estimate method 2. xxxx
     
-    :param ifgs: List of interferograms
-    :param params: Parameters of the simulation
-    :param refpx: Reference pixel X found by ref pixel method
-    :param refpy: Reference pixel Y found by ref pixel method
+    :param xxx(eg str, tuple, int, float...) ifgs: List of interferograms
+    :param xxx params: Parameters of the simulation
+    :param xxx refpx: Reference pixel X found by ref pixel method
+    :param xxx refpy: Reference pixel Y found by ref pixel method
     
-    :return ref_phs: Reference phase correction
-    :return ifgs: Reference phase data removed from list of interferograms
+    :return: ref_phs: Reference phase correction
+    :return: ifgs: Reference phase data removed from list of interferograms
+    :rtype: xxxx(eg float)    
     """
     half_chip_size = int(np.floor(params[cf.REF_CHIP_SIZE] / 2.0))
     chipsize = 2 * half_chip_size + 1
@@ -94,15 +96,16 @@ def est_ref_phase_method2(ifgs, params, refpx, refpy):
 def est_ref_phs_method2(phase_data, half_chip_size,
                         refpx, refpy, thresh):
     """
-    Convenience function for ref phs estimate method 2 parallelisation.
+    Convenience function for reference phase estimate method 2 parallelisation.
    
-    :param phase_data: xxxx
-    :param half_chip_size: xxxx
-    :param refpx: xxxx
-    :param refpy: xxxx
-    :param thres: xxxx
+    :param xxx(eg str, tuple, int, float...) phase_data: xxxx
+    :param xxx half_chip_size: xxxx
+    :param xxx refpx: xxxx
+    :param xxx refpy: xxxx
+    :param xxx thres: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     patch = phase_data[refpy - half_chip_size: refpy + half_chip_size + 1,
                        refpx - half_chip_size: refpx + half_chip_size + 1]
@@ -118,10 +121,11 @@ def est_ref_phase_method1(ifgs, params):
     """
     Reference phase estimate method 1 estimation.
 
-    :param ifgs: List of interferograms or shared.IfgPart class instances
-    :param params: Parameter dictionary corresponding to config file
+    :param list ifgs: List of interferograms or shared.IfgPart class instances
+    :param dict params: Parameter dictionary corresponding to config file
 
-    :return ref_phs: Numpy array of size (nifgs, 1)
+    :return: ref_phs: Numpy array of size (nifgs, 1)
+    :rtype: ndarray
     """
     ifg_phase_data_sum = np.zeros(ifgs[0].shape, dtype=np.float64)
     phase_data = [i.phase_data for i in ifgs]
@@ -150,10 +154,11 @@ def est_ref_phs_method1(phase_data, comp):
     """
     Convenience function for reference phase estimate method 1 parallelisation.
     
-    :param phase_data: xxxx
-    :param comp: xxxx
+    :param xxx(eg str, tuple, int, float...) phase_data: xxxx
+    :param xxx comp: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     ifgv = np.ravel(phase_data, order='F')
     ifgv[comp == 1] = np.nan
@@ -164,10 +169,11 @@ def check_ref_phs_ifgs(ifgs, preread_ifgs=None):
     """
     Check that the reference phase status of all interferograms are the same.
 
-    :param ifgs: xxxx
-    :param flags: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx
+    :param xxx flags: xxxx
     
-    :return xxxx    
+    :return: xxxx
+    :rtype: xxxx(eg float) 
     """
     log.info('Checking status of reference phase estimation')
     if len(ifgs) < 2:

@@ -619,16 +619,20 @@ class TestMEMVsGTiff(unittest.TestCase):
 def warp_old(ifg, x_looks, y_looks, extents, resolution, thresh,
              crop_out, verbose, ret_ifg=True):
     """
-    Resamples 'ifg' and returns a new Ifg obj.
+    Resamples interferogram and returns a new interferogram object.
 
-    :param xlooks: integer factor to scale X axis by, 5 is 5x smaller,
-        1 is no change.
-    :param ylooks: as xlooks, but for Y axis
-    :param extents: georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
-    :param resolution: [xres, yres] or None. Sets resolution output Ifg metadata.
-         Use *None* if raster size is not being changed.
-    :param thresh: see thresh in prepare_ifgs().
+    :param ifg: Input interferogram
+    :param x_looks: Integer factor to scale X axis by, 5 is 5x smaller,
+        1 is no change
+    :param y_looks: Integer factor to scale Y axis by, 5 is 5x smaller,
+        1 is no change
+    :param extents: Georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
+    :param resolution: [xres, yres] or None. Sets resolution output interferogram metadata
+         Use *None* if raster size is not being changed
+    :param thresh: See thresh in prepare_ifgs()
+    :param crop_out: xxxx
     :param verbose: True to print gdalwarp output to stdout
+    :param ret_ifg: xxxx
     """
     # pylint: disable=too-many-locals
     if x_looks != y_looks:

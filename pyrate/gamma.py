@@ -42,11 +42,12 @@ def check_raw_data(data_path, ncols, nrows):
     """
     xxxx
     
-    :param data_path: Path to file
-    :param ncols: Expected number of columns 
-    :param nrows: Expected number of rows
+    :param str data_path: Path to file
+    :param int ncols: Expected number of columns 
+    :param int nrows: Expected number of rows
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     size = ncols * nrows * 4  # DEM and Ifg data are 4 byte floats
@@ -60,9 +61,10 @@ def check_step_mismatch(hdr):
     """
     xxxx
     
-    :param hdr: Dictionary corresponding to header file
+    :param dict hdr: Dictionary corresponding to header file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable= invalid-name
     xs, ys = [abs(i) for i in [hdr[ifc.PYRATE_X_STEP], hdr[ifc.PYRATE_Y_STEP]]]
@@ -76,9 +78,10 @@ def parse_header(path):
     """
     Parses all GAMMA epoch/DEM header file fields into a dictionary.
 
-    :param path: xxxx
+    :param xxx(eg str, tuple, int, float...) path: xxxx
         
-    :return xxxx
+    :return: xxxx
+    :rtype: dict
     """
     with open(path) as f:
         text = f.read().splitlines()
@@ -92,9 +95,10 @@ def parse_epoch_header(path):
     """
     Returns dictionary of the minimum required epoch metadata needed for PyRate.
 
-    :param path: xxxx
+    :param xxx(eg str, tuple, int, float...) path: xxxx
         
-    :return xxxx
+    :return: xxxx
+    :rtype: dict
     """
     lookup = parse_header(path)
     subset = parse_date_time(lookup)
@@ -119,9 +123,10 @@ def parse_date_time(lookup):
     """
     Grab date and time information and convert to datetime objects.
     
-    :param lookup: xxxx
+    :param xxx(eg str, tuple, int, float...) lookup: xxxx
         
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     subset = {}
     if len(lookup[GAMMA_DATE]) == 3:  # pragma: no cover
@@ -145,9 +150,10 @@ def parse_dem_header(path):
     """
     Dictionary of metadata for converting GAMMA to custom PyRate GeoTIFF.
     
-    :param lookup: xxxx
+    :param xxx(eg str, tuple, int, float...) path: xxxx
         
-    :return xxxx
+    :return: xxxx
+    :rtype: dict
     """
     lookup = parse_header(path)
 
@@ -175,9 +181,10 @@ def frequency_to_wavelength(freq):
     """
     Convert radar frequency to wavelength.
     
-    :param freq: xxxx
+    :param xxx(eg str, tuple, int, float...) freq: xxxx
         
-    :return  xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     return ifc.SPEED_OF_LIGHT_METRES_PER_SECOND / freq
 
@@ -186,11 +193,12 @@ def combine_headers(hdr0, hdr1, dem_hdr):
     """
     Combines both epoch header lookups into single interferogram header/dictionary.
 
-    :param hdr0: Header for the earliest/master interferogram
-    :param hdr1: Header for the latest/slave interferogram
-    :param dem_hdr: Dictionary of DEM header attributes
+    :param xxx(eg str, tuple, int, float...) hdr0: Header for the earliest/master interferogram
+    :param xxx hdr1: Header for the latest/slave interferogram
+    :param xxx dem_hdr: Dictionary of DEM header attributes
         
-    :return xxxx        
+    :return: xxxx
+    :rtype: xxxx(eg float)    
     """
     if not all([isinstance(a, dict) for a in [hdr0, hdr1, dem_hdr]]):
         raise GammaException('Header args need to be dicts')
@@ -237,10 +245,11 @@ def manage_headers(dem_header_file, header_paths):
     """
     xxxx
 
-    :param dem_header_file: Dem header path
-    :param header_paths: Header paths corresponding to the master and slave dates
+    :param xxx(eg str, tuple, int, float...) dem_header_file: DEM header path
+    :param xxx header_paths: Header paths corresponding to the master and slave dates
 
-    :return combined_header: Combined dictionary with dem, header file 1 and 2
+    :return: combined_header: Combined dictionary with DEM, header file 1 and 2
+    :rtype: dict
     """
     dem_header = parse_dem_header(dem_header_file)
     # find param files containing filename dates
@@ -257,5 +266,5 @@ def manage_headers(dem_header_file, header_paths):
 
 class GammaException(Exception):
     """
-    Gamma generic exception class.
+    GAMMA generic exception class.
     """

@@ -77,7 +77,9 @@ if not exists(PREP_TEST_TIF):
 
 # convenience ifg creation funcs
 def diff_exts_ifgs():
-    """Returns pair of test Ifgs with different extents"""
+    """
+    Returns pair of test interferograms with different extents.
+    """
     bases = ['geo_060619-061002.tif', 'geo_070326-070917.tif']
     random_dir = tempfile.mkdtemp()
     for p in bases:
@@ -87,7 +89,9 @@ def diff_exts_ifgs():
 
 
 def same_exts_ifgs():
-    """Return pair of Ifgs with same extents"""
+    """
+    Return pair of interferograms with same extents.
+    """
     return [Ifg(join(PREP_TEST_TIF, f)) for f in ('0.tif', '1.tif')]
 
 
@@ -101,7 +105,9 @@ def test_extents_from_params():
 
 
 class PrepifgOutputTests(unittest.TestCase):
-    """Tests aspects of the prepifg.py script, such as resampling."""
+    """
+    Tests aspects of the prepifg.py script, such as resampling.
+    """
 
     def __init__(self, *args, **kwargs):
         super(PrepifgOutputTests, self).__init__(*args, **kwargs)
@@ -190,7 +196,9 @@ class PrepifgOutputTests(unittest.TestCase):
         self.assert_projection_equal(self.ifg_paths + mlooked_paths)
 
     def test_default_max_extents(self):
-        """Test ifgcropopt=2 crops datasets to max bounding box extents."""
+        """
+        Test ifgcropopt=2 crops datasets to maximum bounding box extents.
+        """
         xlooks = ylooks = 1
         prepare_ifgs(self.ifg_paths, MAXIMUM_CROP, xlooks, ylooks)
         for f in [self.exp_files[1], self.exp_files[5]]:
@@ -214,7 +222,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_min_extents(self):
-        """Test ifgcropopt=1 crops datasets to min extents."""
+        """
+        Test ifgcropopt=1 crops datasets to minimum extents.
+        """
         xlooks = ylooks = 1
         prepare_ifgs(self.ifg_paths, MINIMUM_CROP, xlooks, ylooks)
         ifg = Ifg(self.exp_files[0])
@@ -256,7 +266,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_exception_without_all_4_crop_parameters(self):
-        """Test misaligned cropping extents raise errors."""
+        """
+        Test misaligned cropping extents raise errors.
+        """
         xlooks = ylooks = 1
         # empty string and none raises exceptio
         for i in [None, '']:
@@ -272,7 +284,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_custom_extents_misalignment(self):
-        """Test misaligned cropping extents raise errors."""
+        """
+        Test misaligned cropping extents raise errors.
+        """
         xlooks = ylooks = 1
         latlons = tuple(self._custom_ext_latlons())
         for i, _ in enumerate(['xfirst', 'yfirst', 'xlast', 'ylast']):
@@ -290,7 +304,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_nodata(self):
-        """Verify NODATA value copied correctly (amplitude band not copied)"""
+        """
+        Verify NODATA value copied correctly (amplitude band not copied).
+        """
         xlooks = ylooks = 1
         prepare_ifgs(self.ifg_paths, MINIMUM_CROP, xlooks, ylooks)
 
@@ -305,7 +321,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_nans(self):
-        """Verify NaNs replace 0 in the multilooked phase band"""
+        """
+        Verify NaNs replace 0 in the multi-looked phase band.
+        """
         xlooks = ylooks = 1
         prepare_ifgs(self.ifg_paths, MINIMUM_CROP, xlooks, ylooks)
 
@@ -324,7 +342,9 @@ class PrepifgOutputTests(unittest.TestCase):
             i.close()
 
     def test_multilook(self):
-        """Test resampling method using a scaling factor of 4"""
+        """
+        Test resampling method using a scaling factor of 4.
+        """
         scale = 4  # assumes square cells
         self.ifgs.append(DEM(SML_TEST_DEM_TIF))
         self.ifg_paths = [i.data_path for i in self.ifgs]
@@ -375,7 +395,9 @@ class PrepifgOutputTests(unittest.TestCase):
         os.remove(exp_dem_path)
 
     def test_output_datatype(self):
-        """Test resampling method using a scaling factor of 4"""
+        """
+        Test resampling method using a scaling factor of 4.
+        """
         scale = 4  # assumes square cells
         self.ifgs.append(DEM(SML_TEST_DEM_TIF))
         self.ifg_paths = [i.data_path for i in self.ifgs] + [SML_TEST_DEM_TIF]
@@ -395,7 +417,9 @@ class PrepifgOutputTests(unittest.TestCase):
             ds1 = ds2 = None
 
     def test_invalid_looks(self):
-        """Verify only numeric values can be given for multilooking"""
+        """
+        Verify only numeric values can be given for multi-looking.
+        """
         values = [0, -1, -10, -100000.6, ""]
         for v in values:
             self.assertRaises(PreprocessError, prepare_ifgs, self.ifg_paths,
@@ -406,7 +430,9 @@ class PrepifgOutputTests(unittest.TestCase):
 
 
 class ThresholdTests(unittest.TestCase):
-    """Tests for threshold of data -> NaN during resampling."""
+    """
+    Tests for threshold of data -> NaN during resampling.
+    """
 
     def test_nan_threshold_inputs(self):
         data = ones((1, 1))
@@ -445,7 +471,9 @@ class ThresholdTests(unittest.TestCase):
 
 
 class SameSizeTests(unittest.TestCase):
-    """Tests aspects of the prepifg.py script, such as resampling."""
+    """
+    Tests aspects of the prepifg.py script, such as resampling.
+    """
 
     def __init__(self, *args, **kwargs):
         super(SameSizeTests, self).__init__(*args, **kwargs)
@@ -525,7 +553,9 @@ def test_mlooked_path():
 
 
 class LocalMultilookTests(unittest.TestCase):
-    """Tests for local testing functions"""
+    """
+    Tests for local testing functions.
+    """
 
     @staticmethod
     def test_multilooking_thresh():
@@ -545,8 +575,8 @@ def multilooking(src, xscale, yscale, thresh=0):
     """
     Implementation of Matlab Pirate looks.m function.
 
-    src: numpy array of phase data
-    thresh: min number of non-NaNs required for a valid tile resampling
+    :param src: numpy array of phase data
+    :param thresh: min number of non-NaNs required for a valid tile resampling
     """
     thresh = int(thresh)
     num_cells = xscale * yscale
@@ -580,7 +610,7 @@ def multilooking(src, xscale, yscale, thresh=0):
 
 class MatlabEqualityTestRoipacSmallTestData(unittest.TestCase):
     """
-    Matlab to python roipac prepifg equality test for small test data
+    Matlab to Python ROI_PAC prepifg equality test for small test data.
     """
 
     def setUp(self):
@@ -602,7 +632,7 @@ class MatlabEqualityTestRoipacSmallTestData(unittest.TestCase):
 
     def test_matlab_prepifg_equality_array(self):
         """
-        Matlab to python prepifg equality test
+        Matlab to Python prepifg equality test.
         """
         # path to csv folders from matlab output
         onlyfiles = [
@@ -624,7 +654,7 @@ class MatlabEqualityTestRoipacSmallTestData(unittest.TestCase):
 
     def test_matlab_prepifg_and_convert_phase(self):
         """
-        Matlab to python prepifg equality test
+        Matlab to Python prepifg equality test.
         """
         # path to csv folders from matlab output
         for i in self.ifgs_with_nan:

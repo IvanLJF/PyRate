@@ -52,7 +52,7 @@ class IfgListMixin(object):
     Mixin to aid access to commonly used computed values from the PyRate
     config file.
 
-    .. todo:: This should perhaps be renamed to something like *ConfigMixin*
+    todo:: This should perhaps be renamed to something like *ConfigMixin*
         for clarity, as it is ued for accessing more than the list of
         interferograms.
     """
@@ -66,9 +66,9 @@ class IfgListMixin(object):
         """
         Get the list of interferograms to process.
 
-        :param tif: Should the tif files be returned (*True*) or the raw
+        :param xxx(eg str, tuple, int, float...) tif: Should the tif files be returned (*True*) or the raw
             interferograms (*False*). The latter will probably only be required
-            before conversion to geotif files occurs.
+            before conversion to geotif files occurs
         """
 
         file_names = config.parse_namelist(self.ifg_list_file)
@@ -88,9 +88,9 @@ class IfgListMixin(object):
         """
         Get the list of interferograms to process.
 
-        :param tif: Should the tif files be returned (*True*) or the raw
+        :param xxx(eg str, tuple, int, float...) tif: Should the tif files be returned (*True*) or the raw
             interferograms (*False*). The latter will probably only be required
-            before conversion to geotif files occurs.
+            before conversion to geotif files occurs
         """
 
         file_names = config.parse_namelist(self.ifg_list_file)
@@ -123,7 +123,7 @@ class DictParam(luigi.Parameter):
 
     def parse(self, string):
         """
-        override of :py:meth:`luigi.Parameter.parse`.
+        Override of :py:meth:`luigi.Parameter.parse`.
         """
 
         sio = StringIO(string)
@@ -131,7 +131,7 @@ class DictParam(luigi.Parameter):
 
     def serialize(self, dct):
         """
-        override of :py:meth:`luigi.Parameter.serialize`.
+        Override of :py:meth:`luigi.Parameter.serialize`.
         """
         sio = BytesIO()
         pickle.dump(dct, sio)
@@ -145,7 +145,7 @@ class RasterParam(DictParam):  # pragma: no cover
 
     def parse(self, string):
         """
-        override of :py:meth:`DictParam.parse`.
+        Override of :py:meth:`DictParam.parse`.
         """
         dct = super(RasterParam, self).parse(string)
         raster_type = dct['type']
@@ -164,7 +164,7 @@ class RasterParam(DictParam):  # pragma: no cover
 
     def serialize(self, rasterBase):
         """
-        override of :py:meth:`DictParam.serialize`.
+        Override of :py:meth:`DictParam.serialize`.
         """
 
         path = rasterBase.data_path

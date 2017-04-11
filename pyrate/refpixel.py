@@ -15,7 +15,7 @@
 #   limitations under the License.
 """
 This Python module implements an algorithm to search for the location
-of the interferometric reference pixel
+of the interferometric reference pixel.
 """
 import os
 import logging
@@ -33,17 +33,18 @@ log = logging.getLogger(__name__)
 # TODO: move error checking to config step (for fail fast)
 def ref_pixel(ifgs, params):
     """
-    Returns (y,x) reference pixel coordinate from given ifgs.
+    Returns (y,x) reference pixel coordinate from given interferograms.
 
     If the config file REFX or REFY values are empty or subzero, the search for
     the reference pixel is performed. If the REFX|Y values are within the
     bounds of the raster, a search is not performed. REFX|Y values outside
     the upper bounds cause an exception.
 
-    :param ifgs: Sequence of interferograms
-    :param params: Parameters dictionary
+    :param list ifgs: Sequence of interferograms
+    :param dict params: Parameters dictionary
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     half_patch_size, thresh, grid = ref_pixel_setup(ifgs, params)
     parallel = params[cf.PARALLEL]
@@ -69,13 +70,14 @@ def ref_pixel(ifgs, params):
 
 def filter_means(mean_sds, grid):
     """
-    Filter the mean standard deviations from each ref pixel block
+    Filter the mean standard deviations from each reference pixel block
     Parameters.
     
-    :param mean_sds: List of mean standard deviations from each reference pixel grid
-    :param grid: List of grid tuples
+    :param list mean_sds: List of mean standard deviations from each reference pixel grid
+    :param list grid: List of grid tuples
     
     :return Tuple of (refy, refx)
+    :rtype: tuple    
     """
     log.info('Filtering means during reference pixel computation')
     refp_index = np.nanargmin(mean_sds)
@@ -87,10 +89,11 @@ def ref_pixel_setup(ifgs_or_paths, params):
     Sets up the grid for reference pixel computation.
     Also saves numpy files for later use during reference pixel computation.
     
-    :param ifgs_or_paths: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs_or_paths: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     log.info('Setting up ref pixel computation')
     refnx, refny, chipsize, min_frac = params[cf.REFNX], \
@@ -128,13 +131,14 @@ def ref_pixel_mpi(process_grid, half_patch_size, ifgs, thresh, params):
     """
     Convenience function for reference pixel calculation for each process.
     
-    :param process_grid: xxxx
-    :param half_patch_size: xxxx
-    :param ifgs: xxxx
-    :param thresh: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) process_grid: xxxx
+    :param xxx half_patch_size: xxxx
+    :param xxx ifgs: xxxx
+    :param xxx thresh: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx    
+    :return: xxxx
+    :rtype: xxxx(eg float) 
     """
     log.info('Ref pixel calculation started')
     mean_sds = []
@@ -149,13 +153,14 @@ def ref_pixel_multi(g, half_patch_size, phase_data_or_ifg_paths,
     """
     Convenience function for for reference pixel optimisation.
     
-    :param g: xxxx
-    :param half_patch_size: xxxx
-    :param phase_data_or_ifg_paths: xxxx
-    :param thresh: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) g: xxxx
+    :param xxx half_patch_size: xxxx
+    :param xxx phase_data_or_ifg_paths: xxxx
+    :param xxx thresh: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=invalid-name
     # phase_data_or_ifg is list of ifgs
@@ -185,14 +190,15 @@ def ref_pixel_multi(g, half_patch_size, phase_data_or_ifg_paths,
 
 def step(dim, ref, radius):
     """
-    Helper: returns xrange obj of axis indicies for a search window.
+    Helper: returns xrange object of axis indicies for a search window.
 
-    :param dim: Total length of the grid dimension
-    :param ref: The desired number of steps
-    :param radius: The number of cells from the centre of the chip eg.
+    :param xxx(eg str, tuple, int, float...) dim: Total length of the grid dimension
+    :param xxx ref: The desired number of steps
+    :param xxx radius: The number of cells from the centre of the chip eg.
     (chipsize / 2)
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     # if ref == 1:
@@ -253,6 +259,6 @@ def _validate_search_win(refnx, refny, chipsize, head):
 
 
 class RefPixelError(Exception):
-    '''
+    """
     Generic exception for reference pixel errors.
-    '''
+    """

@@ -14,8 +14,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 """
-This Python module contains tests for mpi operations in PyRate.
-Tun this module as 'mpirun -n 4 pytest tests/test_mpi.py'
+This Python module contains tests for MPI operations in PyRate.
+Run this module as 'mpirun -n 4 pytest tests/test_mpi.py'.
 """
 from __future__ import print_function
 
@@ -56,7 +56,7 @@ MPITEST = TRAVIS and GDAL_VERSION == '2.0.0'
 @pytest.fixture()
 def tempdir():
     """
-    tempdir for tests
+    Temporary directory for tests.
     """
     def tmpdir():
         return tempfile.mkdtemp()
@@ -76,15 +76,9 @@ def random_filename(tmpdir_factory):
 @pytest.fixture()
 def get_config():
     """
-    Parameters
-    ----------
-    conf_file: str
-        config file
+    :param conf_file: Config file
 
-    Returns
-    -------
-    params: dict
-        dict of params
+    :return params: Dictionary of parameters
     """
     def params(conf_file):
         return cf.get_config_params(conf_file)

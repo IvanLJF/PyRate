@@ -43,11 +43,12 @@ def main(config_file, rows, cols):
     """ 
     Post-processing main function.
     
-    :param config_file: xxxx
-    :param rows: xxxx
-    :param cols: xxxx
+    :param xxx(eg str, tuple, int, float...) config_file: xxxx
+    :param xxx rows: xxxx
+    :param xxx cols: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # setup paths
     _, _, params = cf.get_ifg_paths(config_file)
@@ -60,11 +61,12 @@ def postprocess_linrate(rows, cols, params):
     """
     Postprocess linear rate.
     
-    :param rows: xxxx
-    :param cols: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) rows: xxxx
+    :param xxx cols: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=expression-not-assigned
     # setup paths
@@ -92,12 +94,13 @@ def save_linrate(ifgs_dict, params, tiles, out_type):
     """
     Save linear rate outputs.
     
-    :param ifgs_dict: xxxx
-    :param params: xxxx
-    :param tiles: xxxx
-    :param out_type: xxxx
+    :param dict ifgs_dict: xxxx
+    :param xxx(eg str, tuple, int, float...) params: xxxx
+    :param xxx tiles: xxxx
+    :param xxx out_type: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     log.info('Starting PyRate postprocessing {}'.format(out_type))
     gt, md, wkt = ifgs_dict['gt'], ifgs_dict['md'], ifgs_dict['wkt']
@@ -129,11 +132,12 @@ def postprocess_timeseries(rows, cols, params):
     """
     Postprocess time series output.
     
-    :param rows: xxxx
-    :param cols: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) rows: xxxx
+    :param xxx cols: xxxx
+    :param xxx params: xxxx
     
-    :return xxxx    
+    :return: xxxx
+    :rtype: xxxx(eg float)  
     """
     # pylint: disable=too-many-locals
     xlks, _, crop = cf.transform_params(params)

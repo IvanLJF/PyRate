@@ -38,7 +38,9 @@ from tests import common
 
 
 class MSTTests(unittest.TestCase):
-    '''Basic verification of minimum spanning tree (MST) functionality.'''
+    """
+    Basic verification of minimum spanning tree (MST) functionality.
+    """
 
     def setUp(self):
         self.ifgs = small_data_setup()

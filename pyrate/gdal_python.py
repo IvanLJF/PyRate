@@ -33,11 +33,12 @@ def world_to_pixel(geo_transform, x, y):
     the pixel location of a geospatial coordinate; from:
     http://pcjericks.github.io/py-gdalogr-cookbook/raster_layers.html#clip-a-geotiff-with-shapefile
 
-    :param geo_transform: xxxx
-    :param x: xxxx
-    :param y:xxxx
+    :param xxx(eg str, tuple, int, float...) geo_transform: xxxx
+    :param xxx x: xxxx
+    :param xxx y:xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     ul_x = geo_transform[0]
     ul_y = geo_transform[3]
@@ -60,12 +61,13 @@ def crop(input_file, extents, geo_trans=None, nodata=np.nan):
     http://pcjericks.github.io/py-gdalogr-cookbook/raster_layers.html
     #clip-a-geotiff-with-shapefile
 
-    :param input_file: A gdal.Dataset or a NumPy array
-    :param extents: The path to the clipping features
-    :param geo_trans: An optional GDAL GeoTransform to use instead
-    :param nodata: The NoData value; defaults to -9999
+    :param array input_file (a gdal.Dataset or a NumPy array)
+    :param xxx extents: The path to the clipping features
+    :param xxx geo_trans: An optional GDAL GeoTransform to use instead
+    :param int nodata: The NoData value; defaults to -9999
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     def image_to_array(i):
@@ -174,12 +176,13 @@ def resample_nearest_neighbour(input_tif, extents, new_res, output_file):
     """
     Nearest neighbor resampling via GDAL.
 
-    :param input_tif: xxxx
-    :param extents: xxxx
-    :param new_res: xxxx
-    :param output_file: xxxx
+    :param xxx(eg str, tuple, int, float...) input_tif: xxxx
+    :param xxx extents: xxxx
+    :param xxx new_res: xxxx
+    :param xxx output_file: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     dst, resampled_proj, src, _ = crop_rasample_setup(extents,
                                                       input_tif,
@@ -196,14 +199,15 @@ def crop_rasample_setup(extents, input_tif, new_res, output_file,
     """
     Convenience function for crop/resample setup.
 
-    :param extents: xxxx
-    :param input_tif: xxxx
-    :param new_res: xxxx
-    :param output_file: xxxx
-    :param dst_driver_type: xxxx
-    :param out_bands: xxxx
+    :param xxx(eg str, tuple, int, float...) extents: xxxx
+    :param xxx input_tif: xxxx
+    :param xxx new_res: xxxx
+    :param xxx output_file: xxxx
+    :param xxx dst_driver_type: xxxx
+    :param xxx out_bands: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # Source
     src_ds = gdal.Open(input_tif, gdalconst.GA_ReadOnly)
@@ -246,13 +250,14 @@ def gdalwarp_width_and_height(max_x, max_y, min_x, min_y, geo_trans):
     """
     Modify pixel height and width based on world_to_pixel.
 
-    :param max_x: xxxx
-    :param max_y: xxxx
-    :param min_x: xxxx
-    :param min_y: xxxx
-    :param geo_trans: xxxx
+    :param xxx(eg str, tuple, int, float...) max_x: xxxx
+    :param xxx max_y: xxxx
+    :param xxx min_x: xxxx
+    :param xxx min_y: xxxx
+    :param xxx geo_trans: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # modified image extents
     ul_x, ul_y = world_to_pixel(geo_trans, min_x, max_y)
@@ -270,15 +275,16 @@ def crop_resample_average(
     """
     Crop, resample, and average a geotif.
 
-    :param input_tif: Path to input geotif to resample/crop
-    :param extents: Georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
-    :param output_file: Output resampled/cropped file name
-    :param new_res: [xres, yres] Sets resolution output interferogram metadata
-    :param thresh: NaN fraction threshold
-    :param out_driver_type: The output driver type. `MEM` or `GTiff` (optional)
-    :param match_pirate: Whether to match Matlab Pirate style resampled/cropped output (optional)
+    :param str input_tif: Path to input geotif to resample/crop
+    :param tuple extents: Georeferenced extents for new file: (xfirst, yfirst, xlast, ylast)
+    :param str output_file: Output resampled/cropped file name
+    :param list new_res: [xres, yres] Sets resolution output interferogram metadata
+    :param float thresh: NaN fraction threshold
+    :param str out_driver_type: The output driver type. `MEM` or `GTiff` (optional)
+    :param bool match_pirate: Whether to match Matlab Pirate style resampled/cropped output (optional)
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     dst_ds, _, _, _ = crop_rasample_setup(
         extents, input_tif, new_res, output_file,
@@ -332,18 +338,19 @@ def crop_resample_average(
 def matlab_alignment(input_tif, new_res, resampled_average, src_ds_mem, src_gt,
                      tmp_ds):
     """
-    Correction step to match python multilook/crop ouput to match that of
+    Correction step to match python multi-look/crop output to match that of
     Matlab Pirate code.
 
-    :param input_tif: Path to input geotif to resample/crop
-    :param new_res: [xres, yres] Sets resolution output interferogram metadata
-    :param resampled_average: ndarray from previous step with average resampling
+    :param str input_tif: Path to input geotif to resample/crop
+    :param list new_res: [xres, yres] Sets resolution output interferogram metadata
+    :param ndarray resampled_average: ndarray from previous step with average resampling
         applied to phase data
-    :param src_ds_mem: gdal memory dataset object
-    :param src_gt: Geotransform tuple
-    :param tmp_ds: gdal memory dataset object
+    :param gdal.Dataset src_ds_mem: gdal memory dataset object
+    :param tuple src_gt: Geotransform tuple
+    :param gdal.Dataset tmp_ds: gdal memory dataset object
 
     :return Modifies the resampled_average array in place.
+    :rtype: xxxx(eg float)    
     """
     src_ds = gdal.Open(input_tif)
     data = src_ds.GetRasterBand(1).ReadAsArray()
@@ -368,16 +375,16 @@ def gdal_average(dst_ds, input_tif, thresh):
     """
     xxxx
 
-    :param dst_ds: Destination gdal dataset object
-    :param input_tif: Input geotif
-    :param thresh: NaN fraction threshold
+    :param gdal.Dataset dst_ds: Destination gdal dataset object
+    :param str input_tif: Input geotif
+    :param float thresh: NaN fraction threshold
 
     :return resampled_average: ndarray of of ifg phase data
     :return src_ds_mem: Modified in memory src_ds with nan_fraction in Band2. The nan_fraction
         is computed efficiently here in gdal in the same step as the that of
         the resampled average (band 1). This results is huge memory and
         computational efficiency
-
+    :rtype: ndarray 
     """
     src_ds, src_ds_mem = _setup_source(input_tif)
     src_ds_mem.GetRasterBand(2).SetNoDataValue(-100000)

@@ -13,10 +13,10 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-'''
-This is used to create the dummy incidence map file .inc file
-This is used to create the dummy elevation map file .lv_theta file
-'''
+"""
+This is used to create the dummy incidence map file .inc file.
+This is used to create the dummy elevation map file .lv_theta file.
+"""
 
 import os
 

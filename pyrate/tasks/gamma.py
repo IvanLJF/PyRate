@@ -50,10 +50,13 @@ class GammaHasRun(luigi.task.ExternalTask):
 
 def get_header_paths(input_file, slc_dir=None):
     """
-    function that matches input file names with header file names
-    :param input_file: input gamma .unw file
-    :return: corresponding header files that matches, or empty list if no match
+    Function that matches input file names with header file names.
+    
+    :param xxx(eg str, tuple, int, float...) input_file: Input gamma .unw file
+    
+    :return: Corresponding header files that matches, or empty list if no match
     found
+    :rtype: xxxx (eg float)
     """
     if slc_dir:
         dir_name = slc_dir
@@ -113,7 +116,9 @@ class ConvertFileToGeotiff(luigi.Task):
 
 
 class ConvertToGeotiff(IfgListMixin, luigi.WrapperTask):
-    """ Wrapper class for gamma convert to geotiff"""
+    """ 
+    Wrapper class for GAMMA convert to geotiff.
+    """
     def requires(self):
         return [ConvertFileToGeotiff(input_file=fn)
                 for fn in self.ifg_list(tif=False)]

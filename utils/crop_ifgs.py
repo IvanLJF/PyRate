@@ -14,12 +14,12 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 """
-python utility to crop an interferogram
+Python utility to crop an interferogram.
 
 example usage:
+
 python pyrate/utils/crop_ifgs.py -i tests/test_data/small_test/tif/geo_060619-061002.tif
 -o out.tif -e '150.91 -34.229999976 150.949166651  -34.17'
-
 """
 from optparse import OptionParser
 import subprocess

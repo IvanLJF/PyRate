@@ -75,12 +75,13 @@ def check_raw_data(is_ifg, data_path, ncols, nrows):
     """
     xxxx
 
-    :param is_ifg: Whether interferogram or DEM
-    :param data_path: Path to file
-    :param ncols: Number of columns in interferogram/DEM
-    :param nrows: Number of rows in interferogram/DEM
+    :param bool is_ifg: Whether interferogram or DEM
+    :param str data_path: Path to file
+    :param int ncols: Number of columns in interferogram/DEM
+    :param int nrows: Number of rows in interferogram/DEM
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     base_size = ncols * nrows
     if is_ifg:
@@ -98,9 +99,10 @@ def check_step_mismatch(header):
     """
     xxxx
     
-    :param header: Dictionary corresponding to header file
+    :param dict header: Dictionary corresponding to header file
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # pylint: disable=invalid-name
     xs, ys = [abs(i) for i in [header[ifc.PYRATE_X_STEP],
@@ -115,9 +117,10 @@ def parse_date(dstr):
     """
     Parses ROI_PAC 'yymmdd' or 'yymmdd-yymmdd' to date or date tuple.
     
-    :param dstr: xxxx
+    :param xxx(eg str, tuple, int, float...) dstr: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     def to_date(date_str):
         """convert to date"""
@@ -135,9 +138,10 @@ def parse_header(hdr_file):
     """
     Parses ROI_PAC header file to a dictionary.
     
-    :param hdr_file: xxxx
+    :param xxx(eg str, tuple, int, float...) hdr_file: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: dict 
     """
     with open(hdr_file) as f:
         text = f.read()
@@ -224,10 +228,11 @@ def manage_header(header_file, projection):
     """
     xxxx
     
-    :param header_file: xxxx
-    :param projection: Projection from dem header. projection = roipac.parse_header(dem_file)[ifc.PYRATE_DATUM]
+    :param xxx(eg str, tuple, int, float...) header_file: xxxx
+    :param xxx projection: Projection from dem header. projection = roipac.parse_header(dem_file)[ifc.PYRATE_DATUM]
     
     :return: xxxx
+    :rtype: xxxx(eg float)
     """
     header = parse_header(header_file)
     if ifc.PYRATE_DATUM not in header:  # DEM already has DATUM
@@ -238,5 +243,5 @@ def manage_header(header_file, projection):
 
 class RoipacException(Exception):
     """
-    Convenience class for throwing exception
+    Convenience class for throwing exception.
     """

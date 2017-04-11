@@ -74,7 +74,9 @@ matlab_ref_phs_method2 = [-21.4459648132324,
 
 
 class RefPhsTests(unittest.TestCase):
-    """Basic reference phase estimation tests"""
+    """
+    Basic reference phase estimation tests.
+    """
 
     def setUp(self):
         self.tmp_dir = tempfile.mkdtemp()
@@ -113,7 +115,7 @@ class RefPhsTests(unittest.TestCase):
 
 class RefPhsEstimationMatlabTestMethod1Serial(unittest.TestCase):
     """
-    Reference phase estimation method 1 is tested vs matlab output
+    Reference phase estimation method 1 is tested vs Matlab output.
     """
 
     @classmethod
@@ -201,7 +203,7 @@ class RefPhsEstimationMatlabTestMethod1Serial(unittest.TestCase):
 
 class RefPhsEstimationMatlabTestMethod1Parallel(unittest.TestCase):
     """
-    Reference phase estimation method 1 is tested vs matlab output
+    Reference phase estimation method 1 is tested vs Matlab output.
     """
     @classmethod
     def setUpClass(cls):
@@ -290,7 +292,7 @@ class RefPhsEstimationMatlabTestMethod1Parallel(unittest.TestCase):
 
 class RefPhsEstimationMatlabTestMethod2Serial(unittest.TestCase):
     """
-    Reference phase estimation method 2 is tested vs matlab output
+    Reference phase estimation method 2 is tested vs Matlab output.
     """
 
     @classmethod
@@ -379,7 +381,7 @@ class RefPhsEstimationMatlabTestMethod2Serial(unittest.TestCase):
 
 class RefPhsEstimationMatlabTestMethod2Parallel(unittest.TestCase):
     """
-    Reference phase estimation method 2 is tested vs matlab output
+    Reference phase estimation method 2 is tested vs Matlab output.
 
     """
     # TODO: Improve the parallel tests to remove duplication from serial tests

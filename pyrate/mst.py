@@ -40,12 +40,13 @@ log = logging.getLogger(__name__)
 
 def mst_from_ifgs(ifgs):
     """
-    Returns default MST dict for the given Ifgs. The MST is calculated using a
+    Returns default MST dict for the given interferograms. The MST is calculated using a
     weighting based on the number of incoherent cells in the phase band.
 
-    :param ifgs: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: dict
     """
 
     edges_with_weights_for_networkx = [(i.master, i.slave, i.nan_fraction)
@@ -62,12 +63,13 @@ def mst_from_ifgs(ifgs):
 
 def mst_parallel(ifgs, params):
     """
-    Wrapper function for calculating ifgs in non MPI runs.
+    Wrapper function for calculating interferograms in non MPI runs.
 
-    :param ifgs: xxxx
-    :param params: xxxx
+    :param xxx(eg str, tuple, int, float...) ifgs: xxxx
+    :param xxx params: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     print('Calculating mst using tiles')
     ncpus = params[cf.PROCESSES]
@@ -103,16 +105,17 @@ def mst_parallel(ifgs, params):
 
 def mst_multiprocessing(tile, ifgs_or_paths, preread_ifgs=None):
     """
-    The memory requirement during mpi mst computation is determined by the
+    The memory requirement during MPI MST computation is determined by the
     number of interferograms times size of IfgPart. Note that we need all interferogram header
     information (like masters/slave dates) for MST computation.
-    To manage memory we need smaller tiles (IfgPart) as number of ifgs go up.
+    To manage memory we need smaller tiles (IfgPart) as number of interferograms go up.
 
-    :param tile: Tile class instance
-    :param ifgs_or_paths: All interferograms paths of the problem. List of strings
-    :param preread_ifgs: xxxx
+    :param xxx(eg str, tuple, int, float...) tile: Tile class instance
+    :param xxx ifgs_or_paths: All interferograms paths of the problem. List of strings
+    :param xxx preread_ifgs: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     ifg_parts = [IfgPart(p, tile, preread_ifgs) for p in ifgs_or_paths]
     t_mst = mst_boolean_array(ifg_parts)
@@ -121,7 +124,7 @@ def mst_multiprocessing(tile, ifgs_or_paths, preread_ifgs=None):
 
 def _build_graph_networkx(edges_with_weights):
     """
-    Convenience graph builder function: returns a new graph obj.
+    Convenience graph builder function: returns a new graph object.
     """
     g = nx.Graph()
     g.add_weighted_edges_from(edges_with_weights)
@@ -132,10 +135,11 @@ def mst_boolean_array(ifgs):
     """
     The MSTs are stripped of connecting edge info, leaving just the interferograms.
 
-    :param ifgs: Sequence of interferogram objects
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects
         
-    :return Filter: Array of independent interferograms from the pixel by pixel MST,
-    like that used by the Matlab Pirate package
+    :return: Filter: Array of independent interferograms from the pixel by pixel MST,
+    like that used by the Matlab Pirate package.
+    :rtype: array    
     """
     no_ifgs = len(ifgs)
     no_y, no_x = ifgs[0].phase_data.shape
@@ -157,9 +161,10 @@ def mst_matrix_ifgs_only(ifgs):
     """
     The MSTs are stripped of connecting edge info, leaving just the interferograms.
 
-    :param ifgs: Sequence of interferogram objects
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects
     
     :return Filter: Array of independent interferograms from the pixel by pixel MST
+    :rtype: array    
     """
     result = empty(shape=ifgs[0].phase_data.shape, dtype=object)
 
@@ -176,9 +181,10 @@ def mst_matrix_as_array(ifgs):
     """
     Each pixel contains an MST (with connecting edges etc).
 
-    :param ifgs: Sequence of interferogram objects
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects
     
-    :return Filter: Array of pixel by pixel MSTs
+    :return: Filter: Array of pixel by pixel MSTs
+    :rtype: array    
     """
 
     mst_result = empty(shape=ifgs[0].phase_data.shape, dtype=object)
@@ -194,9 +200,10 @@ def mst_matrix_networkx(ifgs):
     """
     Generates/emits MST trees on a pixel-by-pixel basis for the given interferograms.
     
-    :param ifgs: Sequence of interferogram objects
+    :param xxx(eg str, tuple, int, float...) ifgs: Sequence of interferogram objects
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     # make default MST to optimise result when no Ifg cells in a stack are nans
     edges_with_weights = [(i.master, i.slave, i.nan_fraction) for i in ifgs]
@@ -242,9 +249,10 @@ def minimum_spanning_edges_from_mst(edges):
     """
     xxxx
     
-    :param edges: List of tuples (master, slave, nan_frac) corresponding to interferograms
+    :param list edges: List of tuples (master, slave, nan_frac) corresponding to interferograms
     
-    :return edges: List of MST edges (g_nx: nx.Graph() instance)
+    :return: edges: List of MST edges (g_nx: nx.Graph() instance)
+    :rtype: list   
     """
     g_nx = _build_graph_networkx(edges)
     T = minimum_spanning_tree(g_nx)  # step ifglist_mst in make_mstmat.m
@@ -264,10 +272,11 @@ def minimum_spanning_tree(G, weight='weight'):
     spanning forest is a union of the spanning trees for each
     connected component of the graph.
 
-    :param G: NetworkX Graph
-    :param weight:  Edge data key to use for weight (default 'weight')
+    :param xxx(eg str, tuple, int, float...) G: NetworkX Graph
+    :param str weight:  Edge data key to use for weight (default 'weight')
 
-    :return G: NetworkX Graph, a minimum spanning tree or forest
+    :return: G: NetworkX Graph, a minimum spanning tree or forest
+    :rtype: xxxx(eg float)
 
     Examples
     >>> G=nx.cycle_graph(4)
@@ -302,12 +311,13 @@ def minimum_spanning_edges(G, weight='weight', data=True):
     with the minimum sum of edge weights.  A spanning forest is a
     union of the spanning trees for each connected component of the graph.
 
-    :param G: NetworkX Graph
-    :param weight: Edge data key to use for weight (default 'weight')
-    :param data: If True yield the edge data along with the edge (optional)
+    :param xxx(eg str, tuple, int, float...) G: NetworkX Graph
+    :param str weight: Edge data key to use for weight (default 'weight')
+    :param bool data: If True yield the edge data along with the edge (optional)
 
-    :return edges: iterator. A generator that produces edges in the minimum spanning tree.
+    :return: edges: A generator that produces edges in the minimum spanning tree.
        The edges are three-tuples (u,v,w) where w is the weight
+    :rtype: iterator
 
     Examples
     >>> G=nx.cycle_graph(4)

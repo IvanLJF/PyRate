@@ -94,7 +94,7 @@ class IfGMeta(object):
 class IfgListPyRate(IfGMeta):
     """
     Copy of Matlab Pirate ifglist in getnml.m.
-    Please note that we don't need BaseT unless we are using variance in ifg
+    Please note that we don't need BaseT unless we are using variance in interferogram
     data as cost.
     """
     # pylint: disable=too-many-instance-attributes
@@ -126,13 +126,14 @@ class IfgListPyRate(IfGMeta):
 
 def data_setup(datafiles):
     """
-    Interferogram  objects for the files in the small_test data dir
+    Interferogram  objects for the files in the small_test data directory
     input phase data is in radians;
-    these ifgs are in radians - not converted to mm
+    these interferograms are in radians - not converted to mm
 
-    :param datafiles: xxxx
+    :param xxx(eg str, tuple, int, float...) datafiles: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     datafiles.sort()
     ifgs = [Ifg(i) for i in datafiles]
@@ -149,11 +150,12 @@ def get_nml(ifg_list_instance, nodata_value,
     Note: the Matlab version tested does not have nan's.
     replaces the ifg_list_instance in place.
 
-    :param ifg_list_instance: xxxx
-    :param nodata_value: xxxx
-    :param nan_conversion: xxxx
+    :param xxx(eg str, tuple, int, float...) ifg_list_instance: xxxx
+    :param xxx nodata_value: xxxx
+    :param xxx nan_conversion: xxxx
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     _epoch_list, n = get_epochs(ifg_list_instance.ifgs)
     ifg_list_instance.reshape_n(n)
@@ -169,9 +171,10 @@ def matlab_mst_kruskal(edges, ntrees=False):
     """
     This is an implementation of the Matlab Pirate mst_kruskal.m
 
-    :param edges: List of edges, list of tuples (id, master, slave, nan_frac)
+    :param xxx(eg str, tuple, int, float...) edges: List of edges, list of tuples (id, master, slave, nan_frac)
     
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     num_ifgs = len(edges)
     master_l = [e[1] for e in edges]
@@ -213,10 +216,11 @@ def calculate_connect_and_ntrees(connect, mst_list):
     """
     Count isolated trees.
 
-    :param connect: xxxx
-    :param mst_list: xxxx
+    :param xxx(eg str, tuple, int, float...) connect: xxxx
+    :param xxx(eg str, tuple, int, float...) mst_list: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     zero_count = np.where(np.sum(connect, axis=1) == 0)[0]
     if zero_count.shape[0]:
@@ -234,10 +238,11 @@ def matlab_mst(ifg_object, p_threshold=1):
     """
     This is an implementation of the Matlab Pirate make_mstmat.m function.
 
-    :param ifg_object: xxxx
-    :param p_threshold: xxxx
+    :param xxx(eg str, tuple, int, float...) ifg_object: xxxx
+    :param xxx p_threshold: xxxx
     
-    :return xxxx 
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     edges = get_sub_structure(ifg_object,
                               np.zeros(len(ifg_object.id), dtype=bool))
@@ -279,10 +284,11 @@ def matlab_mst_gen(ifg_instance, p_threshold=1):
     If memory was not a concern we could have found the entire mst matrix in the
     'matlab_mst' function and this would have been unnecessary.
 
-    :param ifg_instance: IfgListPyRate instance
-    :param p_threshold: Minimum number of non-nan values at any pixel for selection
+    :param xxx(eg str, tuple, int, float...) ifg_instance: IfgListPyRate instance
+    :param xxx p_threshold: Minimum number of non-nan values at any pixel for selection
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     edges = get_sub_structure(ifg_instance,
                               np.zeros(len(ifg_instance.id), dtype=bool))
@@ -325,10 +331,11 @@ def matlab_mst_bool(ifg_list_instance, p_threshold=1):
     If memory was not a concern we could have found the entire mst matrix in the
     previous function and this would have been unnecessary.
 
-    :param ifg_list_instance: IfgListPyRate instance
-    :param p_threshold: Minimum number of non-nan values at any pixel for selection
+    :param xxx(eg str, tuple, int, float...) ifg_list_instance: IfgListPyRate instance
+    :param xxx p_threshold: Minimum number of non-nan values at any pixel for selection
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     num_ifgs = len(ifg_list_instance.ifgs)
     no_y, no_x = ifg_list_instance.ifgs[0].phase_data.shape
@@ -344,10 +351,11 @@ def get_sub_structure(ifg_list, nan_v):
     """
     This is an implementation of the getsubstruct.m function from Matlab Pirate.
 
-    :param ifg_list: Original ifg_list class instance
-    :param nan_v: All interferogram values at this location
+    :param xxx(eg str, tuple, int, float...) ifg_list: Original ifg_list class instance
+    :param xxx nan_v: All interferogram values at this location
     
-    :returns List of tuples (id, master, slave, nan_frac) corresponding to the chosen interferograms.
+    :return: List of tuples (id, master, slave, nan_frac) corresponding to the chosen interferograms.
+    :rtype: tuple
     """
     indices_chosen = np.nonzero(~nan_v)[0]
 

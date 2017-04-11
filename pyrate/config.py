@@ -17,7 +17,7 @@
 This Python module contains utilities to parse PyRate configuration
 files. It also includes numerous general constants relating to options
 in configuration files. Examples of PyRate configuration files are
-provided in the configs/ directory
+provided in the configs/ directory.
 """
 # coding: utf-8
 # pylint: disable= invalid-name
@@ -179,9 +179,10 @@ def degree_conv(deg):
     """
     Convenience: convert numerical degree to human readable string.
 
-    :param deg: xxxx
+    :param xxx(eg str, tuple, int, float...) deg: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: str
     """
 
     degree = int(deg)
@@ -198,9 +199,10 @@ def method_conv(meth):
     """
     Convenience: convert numerical method to human readable string.
 
-    :param meth: xxxx
+    :param xxx(eg str, tuple, int, float...) meth: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: str
     """
 
     method = int(meth)
@@ -273,11 +275,12 @@ INT_KEYS = [APS_CORRECTION, APS_METHOD]
 
 def get_config_params(path):
     """
-    Dictionary for the key:value pairs from the .conf file.
+    Dictionary for the key:value pairs from the config file.
 
-    :param path: xxxx
+    :param xxx(eg str, tuple, int, float...) path: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: dict
     """
     txt = ''
     with open(path, 'r') as inputFile:
@@ -300,12 +303,12 @@ def get_config_params(path):
 
 def _parse_conf_file(content):
     """
-    Parser for converting text content into a dict of parameters.
+    Parser for converting text content into a dictionary of parameters.
     """
 
     def is_valid(line):
         """
-        check if line is  not empty or has % or #.
+        Check if line is  not empty or has % or #.
         """
         return line != "" and line[0] not in "%#"
 
@@ -392,9 +395,10 @@ def parse_namelist(nml):
     """
     Parses name list file into array of paths.
 
-    :param nml: xxxx
+    :param xxx(eg str, tuple, int, float...) nml: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     with open(nml) as f_in:
         lines = [line.rstrip() for line in f_in]
@@ -412,10 +416,11 @@ def write_config_file(params, output_conf_file):
     """
     Takes a param object and write the config file. Reverse of get_conf_params.
 
-    :param params: params dictionary
-    ;param output_conf_file: xxxx
+    :param dict params: params dictionary
+    :param xxx(eg str, tuple, int, float...) output_conf_file: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     with open(output_conf_file, 'w') as f:
         for k, v in params.items():
@@ -431,9 +436,10 @@ def reverse_degree_conv(v):
     """
     Convenience: convert numerical degree to human readable string.
 
-    ;param v: xxxx
+    :param xxx(eg str, tuple, int, float...) v: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: str
     """
     if v == PLANAR:
         return 1
@@ -450,7 +456,7 @@ def transform_params(params):
     """
     Subset of config parameters for cropping and multi-looking.
 
-    ;param params: xxxx
+    :param xxx(eg str, tuple, int, float...) params: xxxx
 
     :return xxxx
     """
@@ -464,9 +470,10 @@ def original_ifg_paths(ifglist_path):
     """
     Sequence of paths to files in given ifglist file.
 
-    ;param ifglist_path: xxxx
+    :param xxx(eg str, tuple, int, float...) ifglist_path: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
 
     basedir = os.path.dirname(ifglist_path)
@@ -478,11 +485,12 @@ def mlooked_path(path, looks, crop_out):
     """
     Adds suffix to path, for creating a new path for mlooked files.
 
-    ;param path: xxxx
-    :param looks: xxxx
-    :param crop_out: xxxx
+    :param xxx(eg str, tuple, int, float...) path: xxxx
+    :param xxx looks: xxxx
+    :param xxx crop_out: xxxx
 
-    :return xxxx
+    :return: xxxx
+    :rtype: xxxx(eg float)
     """
     base, ext = splitext(path)
     return "{base}_{looks}rlks_{crop_out}cr{ext}".format(
@@ -493,12 +501,13 @@ def get_dest_paths(base_paths, crop, params, looks):
     """
     xxxx
 
-    :param base_paths: Unwrapped interferogram paths
-    :param crop: Crop method to use
-    :param params: Parameters dictionary corresponding to config file used
-    :param looks: multi-looking
+    :param list base_paths: Unwrapped interferogram paths
+    :param int crop: Crop method to use
+    :param dict params: Parameters dictionary corresponding to config file used
+    :param int looks: multi-looking
 
-    :return list of output geotifs.
+    :return: List of output geotifs.
+    :rtype: xxxx(eg float)    
     """
     dest_mlooked_ifgs = [mlooked_path(os.path.basename(q).split('.')[0] + '_'
                                       + os.path.basename(q).split('.')[1] +
@@ -512,11 +521,12 @@ def get_ifg_paths(config_file):
     """
     xxxx
 
-    :param config_file: Config file path
+    :param str config_file: Config file path
 
-    :return base_unw_paths: List of unwrapped inteferrograms
-    :return dest_paths: List of multi-looked and cropped geotifs
-    :return pars: Dictionary corresponding to the config file.
+    :return: base_unw_paths: List of unwrapped inteferograms
+    :return: dest_paths: List of multi-looked and cropped geotifs
+    :return: pars: Dictionary corresponding to the config file
+    :rtype: xxxx(eg float) 
     """
     pars = get_config_params(config_file)
     ifg_file_list = pars.get(IFG_FILE_LIST)

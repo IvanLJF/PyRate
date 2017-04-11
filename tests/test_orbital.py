@@ -60,9 +60,9 @@ NUM_COEF_LOOKUP = {
 
 class SingleDesignMatrixTests(unittest.TestCase):
     """
-    Tests to verify correctness of basic planar & quadratic design matrices or
-    DMs. This class serves two purposes, ensuring the independent method DMs are
-    produced correctly. Secondly, these indivdual DMs are subsets of the larger
+    Tests to verify correctness of basic planar and quadratic design matrices or
+    design matrices (DM). This class serves two purposes, ensuring the independent method DMs are
+    produced correctly. Secondly, these individual DMs are subsets of the larger
     DM 'grid' required for the networked orbital correction method.
     """
 
@@ -160,7 +160,9 @@ class SingleDesignMatrixTests(unittest.TestCase):
 
 
 class IndependentCorrectionTests(unittest.TestCase):
-    """Test cases for the orbital correction component of PyRate."""
+    """
+    Test cases for the orbital correction component of PyRate.
+    """
 
     def setUp(self):
         self.ifgs = small5_mock_ifgs()
@@ -220,7 +222,9 @@ class IndependentCorrectionTests(unittest.TestCase):
             assert_array_almost_equal(e, a, decimal=decimal)
 
     def check_results(self, ifgs, corrections):
-        """Helper method for result verification"""
+        """
+        Helper method for result verification.
+        """
         for i, c in zip(ifgs, corrections):
             ys, xs = c.shape
             self.assertEqual(i.nrows, ys)
@@ -251,7 +255,9 @@ class IndependentCorrectionTests(unittest.TestCase):
 
 
 class ErrorTests(unittest.TestCase):
-    """Tests for the networked correction method"""
+    """
+    Tests for the networked correction method.
+    """
 
     def test_invalid_ifgs_arg(self):
         # min requirement is 1 ifg, can still subtract one epoch from the other
@@ -293,7 +299,9 @@ class ErrorTests(unittest.TestCase):
 
 
 class NetworkDesignMatrixTests(unittest.TestCase):
-    """Contains tests verifying creation of sparse network design matrix."""
+    """
+    Contains tests verifying creation of sparse network design matrix.
+    """
 
     def setUp(self):
         self.ifgs = small5_mock_ifgs()
@@ -361,11 +369,12 @@ class NetworkDesignMatrixTests(unittest.TestCase):
 
     def check_equality(self, ncoef, dm, ifgs, offset):
         """
-        Internal test function to check subsets against network design matrix
-        ncoef - base number of coefficients, without extra col for offsets
-        dm - network design matrix to check the results
-        ifgs - sequence of Ifg objs
-        offset - boolean to include extra parameters for model offsets
+        Internal test function to check subsets against network design matrix.
+        
+        :param ncoef: Base number of coefficients, without extra column for offsets
+        :param dm: Network design matrix to check the results
+        :param ifgs: Sequence of interferogram objects
+        :param offset: Boolean to include extra parameters for model offsets
         """
         deg = DEG_LOOKUP[ncoef]
         np = ncoef * self.nepochs # index of 1st offset col
@@ -398,8 +407,9 @@ class NetworkDesignMatrixTests(unittest.TestCase):
 def network_correction(ifgs, deg, off, ml_ifgs=None, tol=1e-6):
     """
     Compares results of orbital_correction() to alternate implementation.
-    deg - PLANAR, QUADRATIC or PART_CUBIC
-    off - True/False to calculate correction with offsets
+
+    :param deg: PLANAR, QUADRATIC or PART_CUBIC
+    :param off: True/False to calculate correction with offsets
     """
     ncells = ifgs[0].num_cells
 
@@ -428,11 +438,12 @@ def network_correction(ifgs, deg, off, ml_ifgs=None, tol=1e-6):
 
 def _expand_corrections(ifgs, dm, params, ncoef, offsets):
     """
-    Convenience func returns model converted to data points.
-    dm: design matrix (do not filter/remove nan cells)
-    params: model parameters array from pinv() * dm
-    ncoef: number of model coefficients (2 planar, 5 quadratic)
-    offsets: True/False to calculate correction with offsets
+    Convenience function returns model converted to data points.
+    
+    :param dm: design matrix (do not filter/remove nan cells)
+    :param params: model parameters array from pinv() * dm
+    :param ncoef: number of model coefficients (2 planar, 5 quadratic)
+    :param offsets: True/False to calculate correction with offsets
     """
     # NB: cannot work on singular ifgs due to date ID id/indexing requirement
     date_ids = get_date_ids(ifgs)
@@ -457,7 +468,9 @@ def _expand_corrections(ifgs, dm, params, ncoef, offsets):
 
 
 class NetworkCorrectionTests(unittest.TestCase):
-    """Verifies orbital correction using network method and no multilooking"""
+    """
+    Verifies orbital correction using network method and no multi-looking.
+    """
 
     def setUp(self):
         # fake some real ifg data by adding nans
@@ -473,10 +486,12 @@ class NetworkCorrectionTests(unittest.TestCase):
 
     def test_offset_inversion(self):
         """
-        Ensure pinv(DM)*obs gives equal results given constant change to fd
+        Ensure pinv(DM)*obs gives equal results given constant change to fd.
         """
         def get_orbital_params():
-            """Returns pseudo-inverse of the DM"""
+            """
+            Returns pseudo-inverse of the design matrix.
+            """
             ncells = self.ifgs[0].num_cells
             data = concatenate([i.phase_data.reshape(ncells) for i in self.ifgs])
             dm = get_network_design_matrix(self.ifgs, PLANAR, True)[~isnan(data)]
@@ -549,7 +564,9 @@ class NetworkCorrectionTests(unittest.TestCase):
 
 
 class NetworkCorrectionTestsMultilooking(unittest.TestCase):
-    'Verifies orbital correction with multilooking and network method'
+    """
+    Verifies orbital correction with multi-looking and network method.
+    """
 
     def setUp(self):
         # fake some real ifg data by adding nans
@@ -612,13 +629,14 @@ class NetworkCorrectionTestsMultilooking(unittest.TestCase):
 
 
 def unittest_dm(ifg, method, degree, offset=False, scale=100.0):
-    '''Helper/test func to create design matrix segments. Includes handling for
+    """Helper/test func to create design matrix segments. Includes handling for
     making quadratic DM segments for use in network method.
-    ifg - source interferogram to model design matrix on
-    method - INDEPENDENT_METHOD or NETWORK_METHOD
-    degree - PLANAR, QUADRATIC or PART_CUBIC
-    offset - True/False to include additional cols for offsets
-    '''
+    
+    :param ifg: Source interferogram to model design matrix on
+    :param method: INDEPENDENT_METHOD or NETWORK_METHOD
+    :param degree: PLANAR, QUADRATIC or PART_CUBIC
+    :param offset: True/False to include additional cols for offsets
+    """
     assert method in [INDEPENDENT_METHOD, NETWORK_METHOD]
 
     xlen = ncoef = NUM_COEF_LOOKUP[degree]
@@ -659,9 +677,9 @@ def unittest_dm(ifg, method, degree, offset=False, scale=100.0):
 
 
 def get_date_ids(ifgs):
-    '''
-    Returns unique master/slave date IDs from the given Ifgs.
-    '''
+    """
+    Returns unique master/slave date IDs from the given interferograms.
+    """
 
     dates = []
     for ifg in ifgs:
@@ -670,7 +688,9 @@ def get_date_ids(ifgs):
 
 
 def _add_nodata(ifgs):
-    """Adds some NODATA/nan cells to the small mock ifgs"""
+    """
+    Adds some NODATA/nan cells to the small mock interferograms.
+    """
     ifgs[0].phase_data[0, :] = nan # 3 error cells
     ifgs[1].phase_data[2, 1:3] = nan # 2 error cells
     ifgs[2].phase_data[3, 2:3] = nan # 1 err
@@ -680,14 +700,13 @@ def _add_nodata(ifgs):
 
 class MatlabComparisonTestsOrbfitMethod1(unittest.TestCase):
     """
-    This is the matlab comparison test of orbital correction functionality.
+    This is the Matlab comparison test of orbital correction functionality.
     Tests use the following config
     orbfit:        1
     orbfitmethod:  2
     orbfitdegrees: 1
     orbfitlksx:    2
     orbfitlksy:    2
-
     """
 
     def setUp(self):
@@ -748,14 +767,13 @@ class MatlabComparisonTestsOrbfitMethod1(unittest.TestCase):
 
 class MatlabComparisonTestsOrbfitMethod2(unittest.TestCase):
     """
-    This is the matlab comparison test of orbital correction functionality.
+    This is the Matlab comparison test of orbital correction functionality.
     Tests use the following config
     orbfit:        1
     orbfitmethod:  2
     orbfitdegrees: 1
     orbfitlksx:    1
     orbfitlksy:    1
-
     """
     def setUp(self):
         self.BASE_DIR = tempfile.mkdtemp()
@@ -820,7 +838,7 @@ class MatlabComparisonTestsOrbfitMethod2(unittest.TestCase):
 
     def test_orbital_error_method2_dummy(self):
         """
-        does not test anything except that the method is working
+        Does not test anything except that the method is working.
         """
         # change to orbital error correction method 2
         self.params[cf.ORBITAL_FIT_METHOD] = 2

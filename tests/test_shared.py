@@ -51,7 +51,9 @@ if not exists(SML_TEST_TIF):
 
 
 class IfgTests(unittest.TestCase):
-    """Unit tests for the Ifg/interferogram class."""
+    """
+    Unit tests for the Ifg/interferogram class.
+    """
 
     def setUp(self):
         self.ifg = Ifg(join(SML_TEST_TIF, 'geo_060619-061002_unw.tif'))
@@ -165,8 +167,8 @@ class IfgIOTests(unittest.TestCase):
 
     def test_open_ifg_from_dataset(self):
         """
-        Test showing open() can not be used for Ifg created with
-        gdal.Dataset object as Dataset has already been read in
+        Test showing open() can not be used for inteferogram created with
+        gdal.Dataset object as Dataset has already been read in.
         """
         paths = [self.ifg.data_path]
         mlooked_phase_data = prepifg.prepare_ifgs(paths,
@@ -291,7 +293,9 @@ class IfgIOTests(unittest.TestCase):
 
 
 class DEMTests(unittest.TestCase):
-    'Unit tests to verify operations on GeoTIFF format DEMs'
+    """
+    Unit tests to verify operations on GeoTIFF format DEMs.
+    """
 
     def setUp(self):
         self.ras = DEM(SML_TEST_DEM_TIF)

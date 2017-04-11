@@ -26,7 +26,7 @@ from pyrate.tasks.utils import InputParam, IfgListMixin
 
 class RoipacHasRun(luigi.task.ExternalTask):
     """
-    Phaux task used to ensure that the required outputs from ROIPAC exist.
+    Phaux task used to ensure that the required outputs from ROI_PAC exist.
     """
 
     fileName = luigi.Parameter()
@@ -100,7 +100,7 @@ class _DoConvertToGeotiffRoipac(IfgListMixin, luigi.WrapperTask):
     @property
     def priority(self):
         """
-        The requires method of this Task *may* reqire the existence of a header
+        The requires method of this Task *may* require the existence of a header
         file... so that needs to be checked first.
         """
         return ResourceHeaderExists.priority - 1
@@ -128,7 +128,7 @@ class _DoConvertToGeotiffRoipac(IfgListMixin, luigi.WrapperTask):
 
 class ConvertToGeotiff(luigi.WrapperTask):
     """
-    Convert ROIPAC files to geotifs.
+    Convert ROI_PAC files to geotifs.
 
     This delegates the actual conversions tasks which operate on individual
     files and is purely a convenience wrapper.
