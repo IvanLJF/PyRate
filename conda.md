@@ -60,22 +60,7 @@ The required packages for PyRate are listed in the environment.yml (YAML format)
 
     source ~/anaconda2/bin/activate pyrate
 
-## Support for `pygrib`, a package used by `PyAPS` (skip this step if not using PyAPS)
-
-`pygrib` does not install properly in `redhat` systems. The work around is the following:
-
-    cp ~/anaconda2/envs/pyrate/lib/libpng16.so.16 ~/anaconda2/envs/pyrate/lib/libpng16.so.16.bk
-    conda install libpng=1.2.50
-    mv ~/anaconda2/envs/pyrate/lib/libpng16.so.16.bk ~/anaconda2/envs/pyrate/lib/libpng16.so.16  
-
-Explanation of the previous three steps:
-    
-1. The first copy command makes a temporary copy of the `.so`. This file is used by `matplotlib`, so we need to keep it. 
-
-2. Then the second command  installs a much older version of `libpng`. This is used by `pygrib` on redhat systems. 
-
-3. The third command just replaces the `.so` back so that `matplotlib` can find it. 
-    
+   
 ## Run `PyRate` tests
 
 To run the full suite of tests, use the following command inside the `PyRate` directory:
