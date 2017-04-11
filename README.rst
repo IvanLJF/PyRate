@@ -10,6 +10,14 @@ PyRate is a Python tool for estimating the average rate (velocity) and increment
 
 PyRate is a partial Python translation of `Pirate <http://homepages.see.leeds.ac.uk/~earhw/software/pirate/>`_, a Matlab tool developed by the University of Leeds and the Guangdong University of Technology.
 
+
+Home Page: https://github.com/GeoscienceAustralia/PyRate
+
+Documentation: http://geoscienceaustralia.github.io/PyRate
+
+Issue tracking: https://github.com/GeoscienceAustralia/PyRate/issues
+
+
 =============
 Initial Setup
 =============
@@ -257,16 +265,6 @@ Python Multi-threading Support
 In addition to the MPI support for HPC, PyRate can use standard
 multi-threading simply by turning ``parallel:  1`` in the config file to
 take advantage of multiple cores on a single PC.
-
-============
-Useful Links
-============
-
-Home Page https://github.com/GeoscienceAustralia/PyRate
-
-Documentation http://geoscienceaustralia.github.io/PyRate
-
-Issue tracking https://github.com/GeoscienceAustralia/PyRate/issues
 
 ===============
 Bugs & Feedback
